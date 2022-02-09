@@ -1,11 +1,9 @@
 import React, { useState } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { Input, Button } from 'react-native-elements';
-// import '../../firebase';
-import { auth } from '../../firebase';
-// import { getAuth, updateProfile, createUserWithEmailAndPassword } from 'firebase/auth';
+import { auth } from './utils/firebase';
 
-const Register = () => {
+const RegisterScreen = ({ navigation }) => {
   const [email, setEmail] = useState('');
   const [name, setName] = useState('');
   const [photoUrl, setPhotoUrl] = useState('');
@@ -14,7 +12,6 @@ const Register = () => {
     auth
       .createUserWithEmailAndPassword(email, password)
       .then((userCredential) => {
-        //
         const user = userCredential.user;
         user
           .updateProfile({
@@ -25,12 +22,12 @@ const Register = () => {
           })
           .then(() => {
             // Profile updated!
-            // ...
           })
           .catch((error) => {
             // An error occurred
-            // ...
           });
+        navigation.replace('Screens');
+        // navigation.popToTop();
       })
       .catch((error) => {
         const errorMessage = error.message;
@@ -74,7 +71,7 @@ const Register = () => {
   );
 };
 
-export default Register;
+export default RegisterScreen;
 
 const styles = StyleSheet.create({
   button: {

@@ -1,27 +1,24 @@
 import React from 'react';
-import { SafeAreaView, ScrollView, StyleSheet, View } from 'react-native';
+import { SafeAreaView, StyleSheet, View } from 'react-native';
 import { Divider } from 'react-native-elements';
 import { Broadcast } from './broadcast/Broadcast.jsx';
 import HomeButtons from './buttons/HomeButtons.jsx';
 import HomeComment from './comment/HomeComment';
 
-const Home = () => {
+const HomeScreen = () => {
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.broadcast}>
         <Broadcast />
       </View>
-
       <HomeButtons />
-
       <Divider width={1} orientation="vertical" />
-
       <HomeComment />
     </SafeAreaView>
   );
 };
 
-export default Home;
+export default HomeScreen;
 
 const styles = StyleSheet.create({
   container: {

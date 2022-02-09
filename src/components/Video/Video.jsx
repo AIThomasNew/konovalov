@@ -25,10 +25,6 @@ const Video = () => {
     wait(2000).then(() => setRefreshing(false));
   }, []);
 
-
-
-
-  
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView
@@ -57,9 +53,6 @@ const Video = () => {
       </ScrollView>
     </SafeAreaView>
   );
-
-
-
 };
 
 export default Video;

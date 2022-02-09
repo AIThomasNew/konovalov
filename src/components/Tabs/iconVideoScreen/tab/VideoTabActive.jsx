@@ -1,7 +1,7 @@
 import * as React from 'react';
 import Svg, { Path, Defs, LinearGradient, Stop } from 'react-native-svg';
 
-const IconBottomVideoActive = (props) => (
+const VideoTabActive = (props) => (
   <Svg
     width={43}
     height={42}
@@ -36,4 +36,4 @@ const IconBottomVideoActive = (props) => (
   </Svg>
 );
 
-export default IconBottomVideoActive;
+export default VideoTabActive;

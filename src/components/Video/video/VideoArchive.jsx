@@ -8,15 +8,21 @@ import {
   View,
 } from 'react-native';
 import VideoItem from './VideoItem';
-import MiniLike from '../../../assets/images/iconVideoScreen/MiniLike';
-import MiniOko from '../../../assets/images/iconVideoScreen/MiniOko';
+import MiniLike from '../../Tabs/iconVideoScreen/MiniLike';
+import MiniOko from '../../Tabs/iconVideoScreen/MiniOko';
 
 const VideoArchive = ({ video }) => {
   return (
     <View style={styles.container}>
       <VideoItem />
       <Text
-        style={{ height: 54, fontSize: 17, fontWeight: 'bold', marginTop: 7, marginLeft: 14 }}
+        style={{
+          height: 54,
+          fontSize: 17,
+          fontWeight: 'bold',
+          marginTop: 7,
+          marginLeft: 14,
+        }}
       >
         Я катаюсь на велосипеде с Дядей{' '}
       </Text>

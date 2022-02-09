@@ -1,14 +1,14 @@
 import React, { useState, useCallback, useEffect } from 'react';
 import { GiftedChat } from 'react-native-gifted-chat';
 
-export default function HomeComment() {
+const HomeComment = () => {
   const [messages, setMessages] = useState([]);
 
   useEffect(() => {
     setMessages([
       {
         _id: 1,
-        text: 'Hello developer',
+        text: 'Ну че народ, погнали нахуй :D !!!',
         createdAt: new Date(),
         user: {
           _id: 2,
@@ -30,9 +30,11 @@ export default function HomeComment() {
       messages={messages}
       onSend={(messages) => onSend(messages)}
       user={{
-        _id: 1,
+        // _id: 1,
+        _id: auth?.currentUser?.email,
       }}
     />
   );
-}
+};
 
+export default HomeComment;

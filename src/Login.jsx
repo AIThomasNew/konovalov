@@ -1,22 +1,37 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, View } from 'react-native';
+import {
+  KeyboardAvoidingView,
+  TouchableOpacity,
+  StyleSheet,
+  TextInput,
+  View,
+  Text,
+} from 'react-native';
 import { Input, Button } from 'react-native-elements';
-import { auth } from '../../firebase';
-// import '../../firebase';
+import { auth } from './utils/firebase';
 
-const Login = ({ navigation }) => {
+const LoginScreen = ({ navigation }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const signIn = () => {
+    auth.signInWithEmailAndPassword(email, password).catch((error) => {
+      const errorMessage = error.message;
+      alert(errorMessage);
+    });
+  };
+
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((user) => {
       if (user) {
-        navigation.replace('Main');
+        navigation.replace('Screens');
       } else {
-        // ...
+        navigation.canGoBack() && navigation.popToTop();
+        // navigation.canGoBack() && navigation.popToTop();
       }
     });
     return unsubscribe;
   }, []);
+  
   return (
     <View style={styles.container}>
       <Input
@@ -34,7 +49,7 @@ const Login = ({ navigation }) => {
         onChangeText={(text) => setPassword(text)}
         secureTextEntry
       />
-      <Button title="Войти" style={styles.button} onPress={sign} />
+      <Button title="Войти" style={styles.button} onPress={signIn} />
       <Button
         title="Регистрация"
         style={styles.button}
@@ -44,7 +59,7 @@ const Login = ({ navigation }) => {
   );
 };
 
-export default Login;
+export default LoginScreen;
 
 const styles = StyleSheet.create({
   button: {

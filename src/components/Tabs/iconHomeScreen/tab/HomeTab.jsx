@@ -1,7 +1,7 @@
 import * as React from 'react';
 import Svg, { Path } from 'react-native-svg';
 
-const IconBottomHome = (props) => (
+const HomeTab = (props) => (
   <Svg
     width={42}
     height={42}
@@ -20,4 +20,4 @@ const IconBottomHome = (props) => (
   </Svg>
 );
 
-export default IconBottomHome;
+export default HomeTab;

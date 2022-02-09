@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import { View, Button, Text, StyleSheet, TouchableOpacity } from 'react-native';
 
-import Like from '../../../assets/images/iconHomeScreen/like/Like';
-import LikeActive from '../../../assets/images/iconHomeScreen/like/LikeActive';
-import Donate from '../../../assets/images/iconHomeScreen/donate/Donate';
-import DonateActive from '../../../assets/images/iconHomeScreen/donate/DonateActive';
+import Like from '../../Tabs/iconHomeScreen/like/Like';
+import LikeActive from '../../Tabs/iconHomeScreen/like/LikeActive';
+import Donate from '../../Tabs/iconHomeScreen/donate/Donate';
+import DonateActive from '../../Tabs/iconHomeScreen/donate/DonateActive';
 
 const HomeButtons = () => {
   const { like, setLike } = useState(false);
