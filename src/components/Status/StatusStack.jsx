@@ -2,16 +2,16 @@ import * as React from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Status from './Status';
 
-const Status = createNativeStackNavigator();
+const Stack = createNativeStackNavigator();
 
 export default function StatusStack() {
   return (
-    <Status.Navigator>
-      <Status.Screen
+    <Stack.Navigator>
+      <Stack.Screen
         name="StoriesStatus"
         component={Status}
         // options={{ headerShown: false }}
       />
-    </Status.Navigator>
+    </Stack.Navigator>
   );
 }

@@ -2,6 +2,7 @@ import * as React from 'react';
 import { StyleSheet } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+
 import RegisterScreen from './Register';
 import LoginScreen from './Login';
 import Screens from './Screens';
@@ -13,19 +14,19 @@ export default function Main() {
     <NavigationContainer style={styles.container}>
       <Stack.Navigator>
         <Stack.Screen
-          name="Login"
+          name="Вход"
           component={LoginScreen}
           // options={{ headerShown: false }}
         />
         <Stack.Screen
-          name="Register"
+          name="Регистрация"
           component={RegisterScreen}
           // options={{ headerShown: false }}
         />
         <Stack.Screen
           name="Screens"
           component={Screens}
-          options={{ headerShown: false }}
+          options={{ headerShown: false }} 
         />
       </Stack.Navigator>
     </NavigationContainer>

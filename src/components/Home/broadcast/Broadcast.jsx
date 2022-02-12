@@ -3,7 +3,7 @@ import { View, Text } from 'react-native';
 import YoutubePlayer, { YoutubeIframeRef } from 'react-native-youtube-iframe';
 
 export const Broadcast = () => {
-  let linkSasha = 'Ek1-adoyE_0';
+  let linkSasha = 'RYTll76pVic';
 
   return (
     <View>

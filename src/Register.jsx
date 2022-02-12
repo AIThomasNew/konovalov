@@ -1,13 +1,22 @@
 import React, { useState } from 'react';
-import { StyleSheet, View } from 'react-native';
-import { Input, Button } from 'react-native-elements';
+import {
+  KeyboardAvoidingView,
+  TouchableOpacity,
+  StyleSheet,
+  TextInput,
+  Text,
+  View,
+} from 'react-native';
 import { auth } from './utils/firebase';
+// import { LinearGradient } from 'expo-linear-gradient';
 
 const RegisterScreen = ({ navigation }) => {
   const [email, setEmail] = useState('');
   const [name, setName] = useState('');
   const [photoUrl, setPhotoUrl] = useState('');
   const [password, setPassword] = useState('');
+
+  // регистрация
   const register = () => {
     auth
       .createUserWithEmailAndPassword(email, password)
@@ -31,56 +40,97 @@ const RegisterScreen = ({ navigation }) => {
       })
       .catch((error) => {
         const errorMessage = error.message;
-        alert(errorMessage);
+        alert('Введите данные', errorMessage); // предупреждение если нет данных
       });
   };
+
   return (
-    <View style={styles.container}>
-      <Input
-        placeholder="Введите ваше имя"
-        label="Name"
-        leftIcon={{ type: 'material', name: 'badge' }}
-        value={name}
-        onChangeText={(text) => setName(text)}
-      />
-      <Input
-        placeholder="Введите ваш e-mail"
-        label="Email"
-        leftIcon={{ type: 'material', name: 'email' }}
-        value={email}
-        onChangeText={(text) => setEmail(text)}
-      />
-      <Input
-        placeholder="Введите ваш пароль"
-        label="Пароль"
-        leftIcon={{ type: 'material', name: 'lock' }}
-        value={password}
-        onChangeText={(text) => setPassword(text)}
-        secureTextEntry
-      />
-      <Input
-        placeholder="Установите фото"
-        label="Фото профиля"
-        leftIcon={{ type: 'material', name: 'face' }}
-        value={photoUrl}
-        onChangeText={(text) => setPhotoUrl(text)}
-        secureTextEntry
-      />
-      <Button title="Регистрация" style={styles.button} onPress={register} />
-    </View>
+    <KeyboardAvoidingView style={styles.container} behavior="padding">
+      <View style={styles.inputContainer}>
+        <TextInput
+          placeholder="Имя"
+          value={name}
+          onChangeText={(text) => setName(text)}
+          style={styles.input}
+        />
+        <TextInput
+          placeholder="E-mail"
+          label="Email"
+          value={email}
+          onChangeText={(text) => setEmail(text)}
+          style={styles.input}
+        />
+        <TextInput
+          placeholder="Пароль"
+          label="Пароль"
+          value={password}
+          onChangeText={(text) => setPassword(text)}
+          secureTextEntry
+          style={styles.input}
+        />
+        <TextInput
+          placeholder="Фото"
+          label="Фото профиля"
+          value={photoUrl}
+          onChangeText={(text) => setPhotoUrl(text)}
+          style={styles.input}
+        />
+      </View>
+
+      <View style={styles.buttonContainer}>
+        <TouchableOpacity onPress={register} style={styles.button}>
+          <Text style={styles.buttonText}>Регистрация</Text>
+        </TouchableOpacity>
+      </View>
+    </KeyboardAvoidingView>
   );
 };
 
 export default RegisterScreen;
 
 const styles = StyleSheet.create({
-  button: {
-    width: 200,
-    marginTop: 10,
-  },
   container: {
     flex: 1,
+    justifyContent: 'center',
     alignItems: 'center',
-    padding: 10,
+  },
+  inputContainer: {
+    width: '80%',
+  },
+  input: {
+    backgroundColor: 'white',
+    paddingHorizontal: 15,
+    paddingVertical: 10,
+    borderRadius: 10,
+    marginTop: 5,
+  },
+  buttonContainer: {
+    width: '60%',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: 40,
+  },
+  button: {
+    backgroundColor: '#d81b60',
+    width: '100%',
+    padding: 15,
+    borderRadius: 10,
+    alignItems: 'center',
+  },
+  buttonOutline: {
+    backgroundColor: 'white',
+    marginTop: 5,
+    borderColor: '#d81b60',
+    borderWidth: 2,
+  },
+  buttonText: {
+    color: 'white',
+    fontWeight: '700',
+    fontSize: 16,
+  },
+  buttonOutlineText: {
+    color: '#d81b60',
+    fontWeight: '700',
+    fontSize: 16,
   },
 });
