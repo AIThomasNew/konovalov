@@ -1,7 +1,6 @@
 import React, { useState, useCallback, useLayoutEffect } from 'react';
 import { GiftedChat, Bubble } from 'react-native-gifted-chat';
 import { auth, db } from '../../../utils/firebase';
-import { Keyboard, View } from 'react-native';
 
 const HomeComment = () => {
   const [messages, setMessages] = useState([]);
@@ -37,6 +36,7 @@ const HomeComment = () => {
   }, []);
 
   return (
+    // <View style={{ flex: 1 }}>
     <GiftedChat
       renderBubble={(props) => {
         return (
@@ -49,16 +49,24 @@ const HomeComment = () => {
             // }}
             wrapperStyle={{
               right: {
-                backgroundColor: '#d81b60',
+                backgroundColor: '#d22744',
               },
             }}
           />
         );
       }}
-      keyboardShouldPersistTaps="always"
+      // alignBottom
+      // isCustomViewBottom
+      // bottomOffset={10}
+      // alwaysShowSend // отображать Send всегда
+      renderAvatarOnTop // аватар пользователя сверху сообщений
+      renderUsernameOnMessage // отображать имя пользователя
+      forceGetKeyboardHeight={false}
+      keyboardShouldPersistTaps="never"
       messages={messages}
       showAvatarForEveryMessage={false}
       onSend={(messages) => onSend(messages)}
+      placeholder="Написать в чат..."
       user={{
         // _id: 1,
         _id: auth?.currentUser?.email,
@@ -66,12 +74,9 @@ const HomeComment = () => {
         avatar: auth?.currentUser?.photoURL,
       }}
     />
+
+    // </View>
   );
 };
 
 export default HomeComment;
-
-// listViewProps={{
-//   keyboardDismissMode: 'on-drag'
-// }}
-//   style={{ flexGrow: 1 }}

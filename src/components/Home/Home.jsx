@@ -1,17 +1,27 @@
 import React from 'react';
-import { SafeAreaView, StyleSheet, View } from 'react-native';
+import {
+  SafeAreaView,
+  StyleSheet,
+  View,
+  Keyboard,
+  TouchableOpacity,
+} from 'react-native';
 import { Divider } from 'react-native-elements';
 import { Broadcast } from './broadcast/Broadcast.jsx';
 import HomeButtons from './buttons/HomeButtons.jsx';
 import HomeComment from './comment/HomeComment';
 
 const HomeScreen = () => {
+  const dismissKeyboard = () => Keyboard.dismiss(); // убрать клавиатуру
+
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.broadcast}>
         <Broadcast />
       </View>
-      <HomeButtons />
+      <TouchableOpacity activeOpacity={1} onPress={dismissKeyboard}>
+        <HomeButtons />
+      </TouchableOpacity>
       <Divider width={1} orientation="vertical" />
       <HomeComment />
     </SafeAreaView>
@@ -27,7 +37,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
   },
   broadcast: {
-    height: 225,
+    maxHeight: 211,
   },
   contentContainer: {
     width: '100%',

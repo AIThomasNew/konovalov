@@ -1,13 +1,18 @@
 import React from 'react';
-import { View, Text } from 'react-native';
-import YoutubePlayer, { YoutubeIframeRef } from 'react-native-youtube-iframe';
+import { View } from 'react-native';
+import YoutubePlayer from 'react-native-youtube-iframe';
 
 export const Broadcast = () => {
-  let linkSasha = 'RYTll76pVic';
+  let link = 'K8kXcNqWN8g'; // приходит динамическая ссылка из firebase/cms
 
   return (
     <View>
-      <YoutubePlayer height={400} width={400} play={true} videoId={linkSasha} />
+      <YoutubePlayer
+        height={'100%'}
+        width={'100%'}
+        play={true}
+        videoId={link}
+      />
     </View>
   );
 };

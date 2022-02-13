@@ -2,7 +2,6 @@ import React, { useLayoutEffect } from 'react';
 import { TouchableOpacity } from 'react-native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import HomeScreen from './Home';
-
 import { Ionicons } from '@expo/vector-icons';
 import { auth } from '../../utils/firebase.js';
 // import { Avatar } from 'react-native-elements';

@@ -9,10 +9,10 @@ import {
   Text,
   View,
 } from 'react-native';
-import StoriesArchive from './stories/StoriesArchive';
-import { POSTS } from '../../data/posts';
-import VideoArchive from './video/VideoArchive';
+import StoriesArchive from './StoriesArchive';
+import VideoArchive from './VideoArchive';
 import { Divider } from 'react-native-elements';
+import { POSTS } from '../../data/posts';
 
 const wait = (timeout) => {
   return new Promise((resolve) => setTimeout(resolve, timeout));
@@ -40,13 +40,14 @@ const Video = () => {
         {/* {POSTS.map((most, index) => (
             <Most most={most} key={index} />
           ))} */}
-        {/* <VideoArchive /> */}
+
+
+
+
+        {/* Тут нужен Flatlist */}
+
         <ScrollView vertical showsVerticalScrollIndicator={false}>
           <View style={styles.videoContainer}>
-            <VideoArchive />
-            <VideoArchive />
-            <VideoArchive />
-            <VideoArchive />
             <VideoArchive />
           </View>
         </ScrollView>

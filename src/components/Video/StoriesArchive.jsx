@@ -8,7 +8,7 @@ import {
   Text,
 } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
-import { USERS } from '../../../data/users';
+import { USERS } from '../../data/users';
 
 const StoriesArchive = () => {
   return (
