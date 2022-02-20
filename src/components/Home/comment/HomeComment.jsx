@@ -36,8 +36,21 @@ const HomeComment = () => {
   }, []);
 
   return (
-    // <View style={{ flex: 1 }}>
     <GiftedChat
+      renderAvatarOnTop // аватар пользователя сверху сообщений
+      renderUsernameOnMessage // отображать имя пользователя
+      forceGetKeyboardHeight={false}
+      keyboardShouldPersistTaps="never"
+      messages={messages}
+      showAvatarForEveryMessage={false}
+      onSend={(messages) => onSend(messages)}
+      placeholder="Написать в чат..."
+      user={{
+        // _id: 1,
+        _id: auth?.currentUser?.email,
+        name: auth?.currentUser?.displayName,
+        avatar: auth?.currentUser?.photoURL,
+      }}
       renderBubble={(props) => {
         return (
           <Bubble
@@ -55,27 +68,7 @@ const HomeComment = () => {
           />
         );
       }}
-      // alignBottom
-      // isCustomViewBottom
-      // bottomOffset={10}
-      // alwaysShowSend // отображать Send всегда
-      renderAvatarOnTop // аватар пользователя сверху сообщений
-      renderUsernameOnMessage // отображать имя пользователя
-      forceGetKeyboardHeight={false}
-      keyboardShouldPersistTaps="never"
-      messages={messages}
-      showAvatarForEveryMessage={false}
-      onSend={(messages) => onSend(messages)}
-      placeholder="Написать в чат..."
-      user={{
-        // _id: 1,
-        _id: auth?.currentUser?.email,
-        name: auth?.currentUser?.displayName,
-        avatar: auth?.currentUser?.photoURL,
-      }}
     />
-
-    // </View>
   );
 };
 

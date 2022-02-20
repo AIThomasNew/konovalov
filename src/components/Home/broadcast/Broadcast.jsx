@@ -3,7 +3,7 @@ import { View } from 'react-native';
 import YoutubePlayer from 'react-native-youtube-iframe';
 
 export const Broadcast = () => {
-  let link = 'K8kXcNqWN8g'; // приходит динамическая ссылка из firebase/cms
+  let link = 'TuY44_PKlec'; // приходит динамическая ссылка из firebase/cms
 
   return (
     <View>

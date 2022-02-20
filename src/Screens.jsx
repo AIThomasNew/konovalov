@@ -19,7 +19,7 @@ import Status from './components/Status/Status';
 const homeName = 'Эфир';
 const videoName = 'Видео';
 const VotesStackName = 'Интерактив';
-const statusName = 'Stories';
+const statusName = 'Status';
 const Tab = createBottomTabNavigator();
 
 export default function Screens() {

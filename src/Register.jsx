@@ -8,7 +8,6 @@ import {
   View,
 } from 'react-native';
 import { auth } from './utils/firebase';
-// import { LinearGradient } from 'expo-linear-gradient';
 
 const RegisterScreen = ({ navigation }) => {
   const [email, setEmail] = useState('');
@@ -16,7 +15,7 @@ const RegisterScreen = ({ navigation }) => {
   const [photoUrl, setPhotoUrl] = useState('');
   const [password, setPassword] = useState('');
 
-  // регистрация
+  //* регистрация
   const register = () => {
     auth
       .createUserWithEmailAndPassword(email, password)
@@ -44,6 +43,29 @@ const RegisterScreen = ({ navigation }) => {
       });
   };
 
+  //* кнопка Neumorphism
+  const NeuMorph = ({ children, size, style }) => {
+    return (
+      <View style={styles.topShadow}>
+        <View style={styles.bottomShadow}>
+          <View
+            style={[
+              styles.inner,
+              {
+                width: size || 200,
+                height: size || 50,
+                borderRadius: size / 2 || 100 / 2,
+              },
+              style,
+            ]}
+          >
+            {children}
+          </View>
+        </View>
+      </View>
+    );
+  };
+
   return (
     <KeyboardAvoidingView style={styles.container} behavior="padding">
       <View style={styles.inputContainer}>
@@ -68,19 +90,31 @@ const RegisterScreen = ({ navigation }) => {
           secureTextEntry
           style={styles.input}
         />
-        <TextInput
+        {/* <TextInput
           placeholder="Фото"
           label="Фото профиля"
           value={photoUrl}
           onChangeText={(text) => setPhotoUrl(text)}
           style={styles.input}
-        />
+        /> */}
       </View>
 
       <View style={styles.buttonContainer}>
-        <TouchableOpacity onPress={register} style={styles.button}>
-          <Text style={styles.buttonText}>Регистрация</Text>
+        <TouchableOpacity onPress={register} activeOpacity={0.4}>
+          <NeuMorph>
+            <View>
+              <Text>РЕГИСТРАЦИЯ</Text>
+            </View>
+          </NeuMorph>
         </TouchableOpacity>
+
+        {/* <TouchableOpacity onPress={() => navigation.navigate('Регистрация')}>
+          <NeuMorph>
+            <View>
+              <Text>РЕГИСТРАЦИЯ</Text>
+            </View>
+          </NeuMorph>
+        </TouchableOpacity> */}
       </View>
     </KeyboardAvoidingView>
   );
@@ -89,6 +123,40 @@ const RegisterScreen = ({ navigation }) => {
 export default RegisterScreen;
 
 const styles = StyleSheet.create({
+  inner: {
+    backgroundColor: '#f2f2f2',
+    borderColor: '#f6f6f6',
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderWidth: 1,
+  },
+
+  topShadow: {
+    shadowOffset: {
+      width: -6,
+      height: -6,
+    },
+    shadowOpacity: 1,
+    shadowRadius: 6,
+    shadowColor: '#FBFFFF',
+    marginBottom: 15,
+  },
+
+  bottomShadow: {
+    shadowOffset: {
+      width: 6,
+      height: 6,
+    },
+    shadowOpacity: 1,
+    shadowRadius: 6,
+    shadowColor: '#d9d9d9',
+  },
+
+  playing: {
+    color: 'gray',
+    fontWeight: '800',
+  },
+
   container: {
     flex: 1,
     justifyContent: 'center',
@@ -101,7 +169,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     paddingHorizontal: 15,
     paddingVertical: 10,
-    borderRadius: 10,
+    borderRadius: 20,
     marginTop: 5,
   },
   buttonContainer: {
@@ -114,7 +182,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#d22744',
     width: '100%',
     padding: 15,
-    borderRadius: 10,
+    borderRadius: 20,
     alignItems: 'center',
   },
   buttonOutline: {
