@@ -8,6 +8,7 @@ import {
   View,
 } from 'react-native';
 import { auth } from './utils/firebase';
+import LogoRed from './components/Tabs/logoRed';
 
 const RegisterScreen = ({ navigation }) => {
   const [email, setEmail] = useState('');
@@ -68,6 +69,7 @@ const RegisterScreen = ({ navigation }) => {
 
   return (
     <KeyboardAvoidingView style={styles.container} behavior="padding">
+      <LogoRed />
       <View style={styles.inputContainer}>
         <TextInput
           placeholder="Имя"
@@ -107,14 +109,6 @@ const RegisterScreen = ({ navigation }) => {
             </View>
           </NeuMorph>
         </TouchableOpacity>
-
-        {/* <TouchableOpacity onPress={() => navigation.navigate('Регистрация')}>
-          <NeuMorph>
-            <View>
-              <Text>РЕГИСТРАЦИЯ</Text>
-            </View>
-          </NeuMorph>
-        </TouchableOpacity> */}
       </View>
     </KeyboardAvoidingView>
   );
@@ -123,6 +117,16 @@ const RegisterScreen = ({ navigation }) => {
 export default RegisterScreen;
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'space-evenly',
+    alignItems: 'center',
+  },
+
+  inputContainer: {
+    width: '80%',
+  },
+
   inner: {
     backgroundColor: '#f2f2f2',
     borderColor: '#f6f6f6',
@@ -157,14 +161,6 @@ const styles = StyleSheet.create({
     fontWeight: '800',
   },
 
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  inputContainer: {
-    width: '80%',
-  },
   input: {
     backgroundColor: 'white',
     paddingHorizontal: 15,
@@ -172,12 +168,13 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     marginTop: 5,
   },
+
   buttonContainer: {
     width: '60%',
     justifyContent: 'center',
     alignItems: 'center',
-    marginTop: 40,
   },
+
   button: {
     backgroundColor: '#d22744',
     width: '100%',
@@ -185,17 +182,20 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     alignItems: 'center',
   },
+
   buttonOutline: {
     backgroundColor: 'white',
     marginTop: 5,
     borderColor: '#d22744',
     borderWidth: 2,
   },
+
   buttonText: {
     color: 'white',
     fontWeight: '700',
     fontSize: 16,
   },
+
   buttonOutlineText: {
     color: '#d22744',
     fontWeight: '700',

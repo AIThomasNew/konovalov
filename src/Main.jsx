@@ -32,6 +32,7 @@ export default function Main() {
             headerTintColor: 'gray',
             headerTitleStyle: { color: 'transparent' },
             headerStyle: { backgroundColor: '#f2f2f2' },
+            headerBackTitleVisible: false,
           }}
         />
         {/* ЭКРАНЫ */}

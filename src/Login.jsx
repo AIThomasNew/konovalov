@@ -8,7 +8,7 @@ import {
   KeyboardAvoidingView,
 } from 'react-native';
 import { auth } from './utils/firebase';
-// import styled from 'styled-components/native';
+import LogoRed from './components/Tabs/logoRed';
 
 // const ButtonActive = styled.View`
 //   border-radius: 50px;
@@ -67,6 +67,7 @@ const LoginScreen = ({ navigation }) => {
 
   return (
     <KeyboardAvoidingView style={styles.container} behavior="padding">
+      <LogoRed />
       <View style={styles.inputContainer}>
         <TextInput
           placeholder="Email"
@@ -114,6 +115,16 @@ const LoginScreen = ({ navigation }) => {
 export default LoginScreen;
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'space-evenly',
+    alignItems: 'center',
+  },
+
+  inputContainer: {
+    width: '80%',
+  },
+
   inner: {
     backgroundColor: '#f2f2f2',
     borderColor: '#f6f6f6',
@@ -148,16 +159,6 @@ const styles = StyleSheet.create({
     fontWeight: '800',
   },
 
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-
-  inputContainer: {
-    width: '80%',
-  },
-
   input: {
     backgroundColor: 'white',
     paddingHorizontal: 15,
@@ -170,7 +171,7 @@ const styles = StyleSheet.create({
     width: '60%',
     justifyContent: 'center',
     alignItems: 'center',
-    marginTop: 40,
+    // marginTop: 40,
   },
 
   buttonOutline: {
