@@ -10,12 +10,6 @@ import {
 import { auth } from './utils/firebase';
 import LogoRed from './components/Tabs/logoRed';
 
-// const ButtonActive = styled.View`
-//   border-radius: 50px;
-//   background: #e0e0e0;
-//   box-shadow: inset 21px 21px 41px #bebebe, inset -21px -21px 41px #ffffff;
-// `;
-
 const LoginScreen = ({ navigation }) => {
   //* логин
   const [email, setEmail] = useState('');
@@ -70,13 +64,13 @@ const LoginScreen = ({ navigation }) => {
       <LogoRed />
       <View style={styles.inputContainer}>
         <TextInput
-          placeholder="Email"
+          placeholder="E-mail"
           value={email}
           onChangeText={(text) => setEmail(text)}
           style={styles.input}
         />
         <TextInput
-          placeholder="Password"
+          placeholder="Пароль"
           value={password}
           onChangeText={(text) => setPassword(text)}
           style={styles.input}
@@ -92,10 +86,6 @@ const LoginScreen = ({ navigation }) => {
             </View>
           </NeuMorph>
         </TouchableOpacity>
-
-        {/* <View style={styles.containerStyle}>
-          <Text>ВОЙТИ</Text>
-        </View> */}
 
         <TouchableOpacity
           onPress={() => navigation.navigate('Регистрация')}
@@ -162,8 +152,8 @@ const styles = StyleSheet.create({
   input: {
     backgroundColor: 'white',
     paddingHorizontal: 15,
-    paddingVertical: 10,
-    borderRadius: 20,
+    paddingVertical: 16,
+    borderRadius: 25,
     marginTop: 5,
   },
 

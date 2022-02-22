@@ -2,40 +2,40 @@ import * as React from 'react';
 import { StyleSheet } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+
+// Вход
 import LoginScreen from './Login';
+
+// Регистрация
 import RegisterScreen from './Register';
+
+// Экраны
 import Screens from './Screens';
 
 // Навигация
 const Stack = createNativeStackNavigator();
 
-// Главный компонент
 export default function Main() {
   return (
     <NavigationContainer style={styles.container}>
       <Stack.Navigator>
-        {/* ЛОГИН */}
         <Stack.Screen
           name="Вход"
           component={LoginScreen}
           options={{ headerShown: false }}
         />
-        {/* РЕГИСТРАЦИЯ */}
         <Stack.Screen
           name="Регистрация"
           component={RegisterScreen}
           animationEnabled={true}
-          // options={{ headerShown: false }}
           options={{
+            headerStyle: { backgroundColor: '#f2f2f2' },
             headerBackTitle: 'Назад',
-            // headerTintColor: '#cd1c4e',
             headerTintColor: 'gray',
             headerTitleStyle: { color: 'transparent' },
-            headerStyle: { backgroundColor: '#f2f2f2' },
             headerBackTitleVisible: false,
           }}
         />
-        {/* ЭКРАНЫ */}
         <Stack.Screen
           name="Screens"
           component={Screens}

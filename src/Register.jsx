@@ -164,8 +164,8 @@ const styles = StyleSheet.create({
   input: {
     backgroundColor: 'white',
     paddingHorizontal: 15,
-    paddingVertical: 10,
-    borderRadius: 20,
+    paddingVertical: 16,
+    borderRadius: 25,
     marginTop: 5,
   },
 
