@@ -44,19 +44,16 @@ export default function Screens() {
         name={homeName}
         component={HomeStack}
         options={{
-          // headerShown: false,
           tabBarIcon: ({ focused }) => {
             return focused ? <HomeTabActive /> : <HomeTab />;
           },
           tabBarActiveTintColor: '#cd1c4e',
-          // tabBarStyle: { display: 'none' },
         }}
       />
       <Tab.Screen
         name={videoName}
         component={Video}
         options={{
-          // headerShown: false,
           tabBarIcon: ({ focused }) => {
             return focused ? <VideoTabActive /> : <VideoTab />;
           },

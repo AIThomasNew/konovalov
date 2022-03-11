@@ -10,9 +10,9 @@ import { Asset } from 'expo-asset';
 import { Stories, Stories2 } from './components';
 import { stories } from '../../data/status';
 
-type StoriesStatusState = {
-  ready: boolean,
-};
+// type StoriesStatusState = {
+//   ready: boolean,
+// };
 
 export default class StoriesStatus extends React.Component<
   {},

@@ -97,6 +97,9 @@ const LoginScreen = ({ navigation }) => {
             </View>
           </NeuMorph>
         </TouchableOpacity>
+        <View>
+          <Text style={{ color: '#cd1c4e' }}>Забыли пароль?</Text>
+        </View>
       </View>
     </KeyboardAvoidingView>
   );
