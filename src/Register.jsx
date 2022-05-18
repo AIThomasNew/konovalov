@@ -1,12 +1,5 @@
 import React, { useState } from 'react';
-import {
-  KeyboardAvoidingView,
-  TouchableOpacity,
-  StyleSheet,
-  TextInput,
-  Text,
-  View,
-} from 'react-native';
+import { KeyboardAvoidingView, TouchableOpacity, StyleSheet, TextInput, Text, View } from 'react-native';
 import { auth } from './utils/firebase';
 import LogoRed from './components/Tabs/logoRed';
 
@@ -25,9 +18,7 @@ const RegisterScreen = ({ navigation }) => {
         user
           .updateProfile({
             displayName: name,
-            photoURL: photoUrl
-              ? photoUrl
-              : 'https://media.pn.am/media/issue/197/297/photo/197297.jpg',
+            photoURL: photoUrl ? photoUrl : 'https://media.pn.am/media/issue/197/297/photo/197297.jpg',
           })
           .then(() => {
             // Profile updated!
@@ -58,8 +49,7 @@ const RegisterScreen = ({ navigation }) => {
                 borderRadius: size / 2 || 100 / 2,
               },
               style,
-            ]}
-          >
+            ]}>
             {children}
           </View>
         </View>
@@ -71,12 +61,7 @@ const RegisterScreen = ({ navigation }) => {
     <KeyboardAvoidingView style={styles.container} behavior="padding">
       <LogoRed />
       <View style={styles.inputContainer}>
-        <TextInput
-          placeholder="Имя"
-          value={name}
-          onChangeText={(text) => setName(text)}
-          style={styles.input}
-        />
+        <TextInput placeholder="Имя" value={name} onChangeText={(text) => setName(text)} style={styles.input} />
         <TextInput
           placeholder="E-mail"
           label="Email"

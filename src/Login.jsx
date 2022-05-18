@@ -1,12 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import {
-  Text,
-  View,
-  TextInput,
-  StyleSheet,
-  TouchableOpacity,
-  KeyboardAvoidingView,
-} from 'react-native';
+import { Text, View, TextInput, StyleSheet, TouchableOpacity, KeyboardAvoidingView } from 'react-native';
 import { auth } from './utils/firebase';
 import LogoRed from './components/Tabs/logoRed';
 
@@ -50,8 +43,7 @@ const LoginScreen = ({ navigation }) => {
                 borderRadius: size / 2 || 100 / 2,
               },
               style,
-            ]}
-          >
+            ]}>
             {children}
           </View>
         </View>
@@ -63,12 +55,7 @@ const LoginScreen = ({ navigation }) => {
     <KeyboardAvoidingView style={styles.container} behavior="padding">
       <LogoRed />
       <View style={styles.inputContainer}>
-        <TextInput
-          placeholder="E-mail"
-          value={email}
-          onChangeText={(text) => setEmail(text)}
-          style={styles.input}
-        />
+        <TextInput placeholder="E-mail" value={email} onChangeText={(text) => setEmail(text)} style={styles.input} />
         <TextInput
           placeholder="Пароль"
           value={password}
@@ -87,19 +74,16 @@ const LoginScreen = ({ navigation }) => {
           </NeuMorph>
         </TouchableOpacity>
 
-        <TouchableOpacity
-          onPress={() => navigation.navigate('Регистрация')}
-          activeOpacity={0.4}
-        >
+        <TouchableOpacity onPress={() => navigation.navigate('Регистрация')} activeOpacity={0.4}>
           <NeuMorph>
             <View>
               <Text>РЕГИСТРАЦИЯ</Text>
             </View>
           </NeuMorph>
         </TouchableOpacity>
-        <View>
+        {/* <View>
           <Text style={{ color: '#cd1c4e' }}>Забыли пароль?</Text>
-        </View>
+        </View> */}
       </View>
     </KeyboardAvoidingView>
   );

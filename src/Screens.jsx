@@ -6,19 +6,15 @@ import HomeTab from './components/Tabs/iconHomeScreen/tab/HomeTab';
 import HomeTabActive from './components/Tabs/iconHomeScreen/tab/HomeTabActive';
 import VideoTab from './components/Tabs/iconVideoScreen/tab/VideoTab';
 import VideoTabActive from './components/Tabs/iconVideoScreen/tab/VideoTabActive';
-import VotesTab from './components/Tabs/iconVoteScreen/tab/VotesTab';
-import VotesTabActive from './components/Tabs/iconVoteScreen/tab/VotesTabActive';
 import StoriesTab from './components/Tabs/iconStatusScreen/tab/StoriesTab';
 import StoriesTabActive from './components/Tabs/iconStatusScreen/tab/StoriesTabActive';
 
 import HomeStack from './components/Home/HomeStack';
 import Video from './components/Video/Video';
-import VotesStack from './components/Votes/VotesStack';
 import Status from './components/Status/Status';
 
 const homeName = 'Эфир';
 const videoName = 'Видео';
-const VotesStackName = 'Интерактив';
 const statusName = 'Status';
 const Tab = createBottomTabNavigator();
 
@@ -38,8 +34,8 @@ export default function Screens() {
           color: 'black',
           fontSize: 20,
         },
-      }}
-    >
+      }}>
+      {/* BROADCAST */}
       <Tab.Screen
         name={homeName}
         component={HomeStack}
@@ -50,6 +46,8 @@ export default function Screens() {
           tabBarActiveTintColor: '#cd1c4e',
         }}
       />
+
+      {/* VIDEOS */}
       <Tab.Screen
         name={videoName}
         component={Video}
@@ -60,17 +58,8 @@ export default function Screens() {
           tabBarActiveTintColor: '#cd1c4e',
         }}
       />
-      <Tab.Screen
-        name={VotesStackName}
-        component={VotesStack}
-        options={{
-          headerShown: false,
-          tabBarIcon: ({ focused }) => {
-            return focused ? <VotesTabActive /> : <VotesTab />;
-          },
-          tabBarActiveTintColor: '#cd1c4e',
-        }}
-      />
+
+      {/* STORIES */}
       <Tab.Screen
         name={statusName}
         component={Status}

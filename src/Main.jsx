@@ -19,11 +19,7 @@ export default function Main() {
   return (
     <NavigationContainer style={styles.container}>
       <Stack.Navigator>
-        <Stack.Screen
-          name="Вход"
-          component={LoginScreen}
-          options={{ headerShown: false }}
-        />
+        <Stack.Screen name="Вход" component={LoginScreen} options={{ headerShown: false }} />
         <Stack.Screen
           name="Регистрация"
           component={RegisterScreen}
@@ -36,11 +32,7 @@ export default function Main() {
             headerBackTitleVisible: false,
           }}
         />
-        <Stack.Screen
-          name="Screens"
-          component={Screens}
-          options={{ headerShown: false }}
-        />
+        <Stack.Screen name="Screens" component={Screens} options={{ headerShown: false }} />
       </Stack.Navigator>
     </NavigationContainer>
   );
