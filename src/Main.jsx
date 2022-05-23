@@ -6,9 +6,6 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 // Вход
 import LoginScreen from './Login';
 
-// Регистрация
-import RegisterScreen from './Register';
-
 // Экраны
 import Screens from './Screens';
 
@@ -20,18 +17,6 @@ export default function Main() {
     <NavigationContainer style={styles.container}>
       <Stack.Navigator>
         <Stack.Screen name="Вход" component={LoginScreen} options={{ headerShown: false }} />
-        <Stack.Screen
-          name="Регистрация"
-          component={RegisterScreen}
-          animationEnabled={true}
-          options={{
-            headerStyle: { backgroundColor: '#f2f2f2' },
-            headerBackTitle: 'Назад',
-            headerTintColor: 'gray',
-            headerTitleStyle: { color: 'transparent' },
-            headerBackTitleVisible: false,
-          }}
-        />
         <Stack.Screen name="Screens" component={Screens} options={{ headerShown: false }} />
       </Stack.Navigator>
     </NavigationContainer>

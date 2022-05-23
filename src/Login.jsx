@@ -1,35 +1,66 @@
+// import { auth } from './utils/firebase';
 import React, { useState, useEffect } from 'react';
-import { Text, View, TextInput, StyleSheet, TouchableOpacity, KeyboardAvoidingView } from 'react-native';
-import { auth } from './utils/firebase';
+import { Text, View, Image, StyleSheet, TouchableOpacity, KeyboardAvoidingView } from 'react-native';
 import LogoRed from './components/Tabs/logoRed';
+import * as Google from 'expo-auth-session/providers/google'; // auth
+import * as WebBrowser from 'expo-web-browser'; // web
+
+WebBrowser.maybeCompleteAuthSession();
 
 const LoginScreen = ({ navigation }) => {
-  //* логин
-  const [email, setEmail] = useState('');
-  //* пароль
-  const [password, setPassword] = useState('');
 
-  //* вход
-  const signIn = () => {
-    auth.signInWithEmailAndPassword(email, password).catch((error) => {
-      const errorMessage = error.message;
-      alert('Введите данные', errorMessage);
-    });
-  };
 
-  //? проверить значение <=
+  const [accessToken, setAccessToken] = useState(); // токен доступа
+  const [userInfo, setUserInfo] = useState(); // отображение инф. о пользователе
+  const [message, setMessage] = useState(); // сообщение
+
+
+
+  // promptAsync - При вызове веб-браузер откроется и предложит пользователю пройти аутентификацию
+
+  const [request, response, promptAsync] = Google.useAuthRequest({
+    androidClientId: '403461287346-j139qhj71hlvsrivbos9rqib8snqo9d5.apps.googleusercontent.com',
+    iosClientId: '403461287346-kdm1iso79uelqhplgefh7mmlrkn0ah16.apps.googleusercontent.com',
+    expoClientId: '403461287346-i62ft6303hgt34itdk7mnlp6gmkff0a3.apps.googleusercontent.com',
+  });
+
+
+
   useEffect(() => {
-    const unsubscribe = auth.onAuthStateChanged((user) => {
-      if (user) {
-        navigation.replace('Screens');
-      } else {
-        navigation.canGoBack() && navigation.popToTop();
-      }
-    });
-    return unsubscribe;
-  }, []);
+    setMessage(JSON.stringify(response));
+    if (response?.type === 'success') {
+      setAccessToken(response.authentication.accessToken);
+    }
+  }, [response]);
 
-  //* кнопка Neumorphism
+
+
+  async function getUserData() {
+    let userInfoResponse = await fetch('https://www.googleapis.com/auth/userinfo/v2/me', {
+      headers: { Authorization: `Bearer ${accessToken}` },
+    });
+
+    userInfoResponse.json().then((data) => {
+      setUserInfo(data);
+    });
+  }
+
+
+
+  function showUserInfo() {
+    if (userInfo) {
+      return (
+        <View style={styles.userInfo}>
+          <Image source={{ uri: userInfo.picture }} style={styles.profilePic} />
+          <Text>Welcome {userInfo.name}</Text>
+          <Text>{userInfo.email}</Text>
+        </View>
+      );
+    }
+  }
+
+
+
   const NeuMorph = ({ children, size, style }) => {
     return (
       <View style={styles.topShadow}>
@@ -38,7 +69,7 @@ const LoginScreen = ({ navigation }) => {
             style={[
               styles.inner,
               {
-                width: size || 200,
+                width: size || 300,
                 height: size || 50,
                 borderRadius: size / 2 || 100 / 2,
               },
@@ -51,39 +82,34 @@ const LoginScreen = ({ navigation }) => {
     );
   };
 
+
+
+
+
   return (
     <KeyboardAvoidingView style={styles.container} behavior="padding">
       <LogoRed />
-      <View style={styles.inputContainer}>
-        <TextInput placeholder="E-mail" value={email} onChangeText={(text) => setEmail(text)} style={styles.input} />
-        <TextInput
-          placeholder="Пароль"
-          value={password}
-          onChangeText={(text) => setPassword(text)}
-          style={styles.input}
-          secureTextEntry
-        />
-      </View>
+
+      {/* <Text>{message}</Text> */}
+      {showUserInfo()}
 
       <View style={styles.buttonContainer}>
-        <TouchableOpacity onPress={signIn} activeOpacity={0.4}>
+        <TouchableOpacity
+          title={accessToken ? 'Get User Data' : 'Login'}
+          onPress={
+            accessToken
+              ? getUserData
+              : () => {
+                  promptAsync({ useProxy: false, showInRecents: true });
+                }
+          }
+          activeOpacity={0.4}>
           <NeuMorph>
             <View>
-              <Text>ВОЙТИ</Text>
+              <Text>ВХОД ЧЕРЕЗ GOOGLE АККАУНТ</Text>
             </View>
           </NeuMorph>
         </TouchableOpacity>
-
-        <TouchableOpacity onPress={() => navigation.navigate('Регистрация')} activeOpacity={0.4}>
-          <NeuMorph>
-            <View>
-              <Text>РЕГИСТРАЦИЯ</Text>
-            </View>
-          </NeuMorph>
-        </TouchableOpacity>
-        {/* <View>
-          <Text style={{ color: '#cd1c4e' }}>Забыли пароль?</Text>
-        </View> */}
       </View>
     </KeyboardAvoidingView>
   );
@@ -91,10 +117,17 @@ const LoginScreen = ({ navigation }) => {
 
 export default LoginScreen;
 
+// G #4086f4
+// O #eb4132
+// O #fbbd01
+// G #4086f4
+// L #30a952
+// E #eb4132
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'space-evenly',
+    justifyContent: 'center',
     alignItems: 'center',
   },
 
@@ -148,7 +181,7 @@ const styles = StyleSheet.create({
     width: '60%',
     justifyContent: 'center',
     alignItems: 'center',
-    // marginTop: 40,
+    marginTop: 50,
   },
 
   buttonOutline: {
