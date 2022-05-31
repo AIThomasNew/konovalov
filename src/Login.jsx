@@ -1,51 +1,68 @@
 // import { auth } from './utils/firebase';
-import React, { useState, useEffect } from 'react';
-import { Text, View, Image, StyleSheet, TouchableOpacity, KeyboardAvoidingView } from 'react-native';
-import LogoRed from './components/Tabs/logoRed';
-import * as Google from 'expo-auth-session/providers/google'; // auth
-import * as WebBrowser from 'expo-web-browser'; // web
+import React, { useState, useEffect } from 'react'
+import { Text, View, Image, TextInput, StyleSheet, TouchableOpacity, KeyboardAvoidingView } from 'react-native'
+import LogoRed from './components/Tabs/logoRed'
+import * as Google from 'expo-auth-session/providers/google'
+import * as WebBrowser from 'expo-web-browser'
+import { auth } from './utils/firebase'
 
-WebBrowser.maybeCompleteAuthSession();
+WebBrowser.maybeCompleteAuthSession()
 
 const LoginScreen = ({ navigation }) => {
-
-
-  const [accessToken, setAccessToken] = useState(); // токен доступа
-  const [userInfo, setUserInfo] = useState(); // отображение инф. о пользователе
-  const [message, setMessage] = useState(); // сообщение
-
-
+  const [accessToken, setAccessToken] = useState()
+  const [userInfo, setUserInfo] = useState()
 
   // promptAsync - При вызове веб-браузер откроется и предложит пользователю пройти аутентификацию
 
-  const [request, response, promptAsync] = Google.useAuthRequest({
-    androidClientId: '403461287346-j139qhj71hlvsrivbos9rqib8snqo9d5.apps.googleusercontent.com',
-    iosClientId: '403461287346-kdm1iso79uelqhplgefh7mmlrkn0ah16.apps.googleusercontent.com',
-    expoClientId: '403461287346-i62ft6303hgt34itdk7mnlp6gmkff0a3.apps.googleusercontent.com',
-  });
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
 
-
-
-  useEffect(() => {
-    setMessage(JSON.stringify(response));
-    if (response?.type === 'success') {
-      setAccessToken(response.authentication.accessToken);
-    }
-  }, [response]);
-
-
-
-  async function getUserData() {
-    let userInfoResponse = await fetch('https://www.googleapis.com/auth/userinfo/v2/me', {
-      headers: { Authorization: `Bearer ${accessToken}` },
-    });
-
-    userInfoResponse.json().then((data) => {
-      setUserInfo(data);
-    });
+  const signIn = () => {
+    auth.signInWithEmailAndPassword(email, password).catch((error) => {
+      const errorMessage = error.message
+      alert('Введите данные', errorMessage)
+    })
   }
 
+  useEffect(() => {
+    const unsubscribe = auth.onAuthStateChanged((user) => {
+      if (user) {
+        navigation.replace('Screens')
+      } else {
+        navigation.canGoBack() && navigation.popToTop()
+      }
 
+      return unsubscribe
+    }, [])
+  })
+
+  const [request, response, promptAsync] = Google.useAuthRequest({
+    androidClientId: '64014568433-jrf61r43nudjoovvahq16ucrq61pvvfk.apps.googleusercontent.com',
+    iosClientId: '64014568433-n25arqbcvl2jfjijtq5reiumgkpmn1hn.apps.googleusercontent.com',
+    expoClientId: '64014568433-4gqc1ndduh98lgn3b6q1ffmpkmdtd9k5.apps.googleusercontent.com',
+  })
+
+  useEffect(() => {
+    if (response?.type === 'success') {
+      // const { email, name, photoUrl } = user;
+
+      setAccessToken(response.authentication.accessToken)
+
+      navigation.navigate('Screens')
+    }
+  }, [response])
+
+  // { email, name, photoUrl }
+
+  async function getUserData() {
+    let userInfoResponse = await fetch('https://www.googleapis.com/userinfo/v2/me', {
+      headers: { Authorization: `Bearer ${accessToken}` },
+    })
+
+    userInfoResponse.json().then((data) => {
+      setUserInfo(data)
+    })
+  }
 
   function showUserInfo() {
     if (userInfo) {
@@ -55,11 +72,9 @@ const LoginScreen = ({ navigation }) => {
           <Text>Welcome {userInfo.name}</Text>
           <Text>{userInfo.email}</Text>
         </View>
-      );
+      )
     }
   }
-
-
 
   const NeuMorph = ({ children, size, style }) => {
     return (
@@ -79,28 +94,50 @@ const LoginScreen = ({ navigation }) => {
           </View>
         </View>
       </View>
-    );
-  };
-
-
-
-
+    )
+  }
 
   return (
     <KeyboardAvoidingView style={styles.container} behavior="padding">
       <LogoRed />
 
-      {/* <Text>{message}</Text> */}
       {showUserInfo()}
 
+      <View style={styles.inputContainer}>
+        <TextInput placeholder="E-mail" value={email} onChangeText={(text) => setEmail(text)} style={styles.input} />
+        <TextInput
+          placeholder="Пароль"
+          value={password}
+          onChangeText={(text) => setPassword(text)}
+          style={styles.input}
+          secureTextEntry
+        />
+      </View>
+
       <View style={styles.buttonContainer}>
+        <TouchableOpacity onPress={signIn} activeOpacity={0.4}>
+          <NeuMorph>
+            <View>
+              <Text>ВОЙТИ</Text>
+            </View>
+          </NeuMorph>
+        </TouchableOpacity>
+
+        <TouchableOpacity onPress={() => navigation.navigate('Регистрация')} activeOpacity={0.4}>
+          <NeuMorph>
+            <View>
+              <Text>РЕГИСТРАЦИЯ</Text>
+            </View>
+          </NeuMorph>
+        </TouchableOpacity>
+
         <TouchableOpacity
           title={accessToken ? 'Get User Data' : 'Login'}
           onPress={
             accessToken
               ? getUserData
               : () => {
-                  promptAsync({ useProxy: false, showInRecents: true });
+                  promptAsync({ useProxy: false, showInRecents: true })
                 }
           }
           activeOpacity={0.4}>
@@ -112,17 +149,10 @@ const LoginScreen = ({ navigation }) => {
         </TouchableOpacity>
       </View>
     </KeyboardAvoidingView>
-  );
-};
+  )
+}
 
-export default LoginScreen;
-
-// G #4086f4
-// O #eb4132
-// O #fbbd01
-// G #4086f4
-// L #30a952
-// E #eb4132
+export default LoginScreen
 
 const styles = StyleSheet.create({
   container: {
@@ -202,4 +232,20 @@ const styles = StyleSheet.create({
     fontWeight: '700',
     fontSize: 16,
   },
-});
+
+  userInfo: {
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  profilePic: {
+    width: 50,
+    height: 50,
+  },
+})
+
+// G #4086f4
+// O #eb4132
+// O #fbbd01
+// G #4086f4
+// L #30a952
+// E #eb4132

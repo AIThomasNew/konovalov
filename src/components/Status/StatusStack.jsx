@@ -1,8 +1,8 @@
-import * as React from 'react';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import Status from './Status';
+import * as React from 'react'
+import { createNativeStackNavigator } from '@react-navigation/native-stack'
+import Status from './Status'
 
-const Stack = createNativeStackNavigator();
+const Stack = createNativeStackNavigator()
 
 export default function StatusStack() {
   return (
@@ -13,5 +13,5 @@ export default function StatusStack() {
         // options={{ headerShown: false }}
       />
     </Stack.Navigator>
-  );
+  )
 }

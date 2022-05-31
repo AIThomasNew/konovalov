@@ -1,22 +1,17 @@
-import React, { useLayoutEffect } from 'react';
-import { THEME } from './components/Theme/theme';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import React from 'react'
+import HomeTab from './components/Tabs/iconHomeScreen/tab/HomeTab'
+import HomeTabActive from './components/Tabs/iconHomeScreen/tab/HomeTabActive'
+import StoriesTab from './components/Tabs/iconStatusScreen/tab/StoriesTab'
+import StoriesTabActive from './components/Tabs/iconStatusScreen/tab/StoriesTabActive'
+import HomeStack from './components/Home/HomeStack'
+import Status from './components/Status/Status'
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
+import { THEME } from './components/Theme/theme'
 
-import HomeTab from './components/Tabs/iconHomeScreen/tab/HomeTab';
-import HomeTabActive from './components/Tabs/iconHomeScreen/tab/HomeTabActive';
-import VideoTab from './components/Tabs/iconVideoScreen/tab/VideoTab';
-import VideoTabActive from './components/Tabs/iconVideoScreen/tab/VideoTabActive';
-import StoriesTab from './components/Tabs/iconStatusScreen/tab/StoriesTab';
-import StoriesTabActive from './components/Tabs/iconStatusScreen/tab/StoriesTabActive';
+const Tab = createBottomTabNavigator()
 
-import HomeStack from './components/Home/HomeStack';
-import Video from './components/Video/Video';
-import Status from './components/Status/Status';
-
-const homeName = 'Эфир';
-const videoName = 'Видео';
-const statusName = 'Status';
-const Tab = createBottomTabNavigator();
+const homeName = 'Эфир'
+const statusName = 'Status'
 
 export default function Screens() {
   return (
@@ -41,19 +36,7 @@ export default function Screens() {
         component={HomeStack}
         options={{
           tabBarIcon: ({ focused }) => {
-            return focused ? <HomeTabActive /> : <HomeTab />;
-          },
-          tabBarActiveTintColor: '#cd1c4e',
-        }}
-      />
-
-      {/* VIDEOS */}
-      <Tab.Screen
-        name={videoName}
-        component={Video}
-        options={{
-          tabBarIcon: ({ focused }) => {
-            return focused ? <VideoTabActive /> : <VideoTab />;
+            return focused ? <HomeTabActive /> : <HomeTab />
           },
           tabBarActiveTintColor: '#cd1c4e',
         }}
@@ -66,12 +49,12 @@ export default function Screens() {
         options={{
           headerShown: false,
           tabBarIcon: ({ focused }) => {
-            return focused ? <StoriesTabActive /> : <StoriesTab />;
+            return focused ? <StoriesTabActive /> : <StoriesTab />
           },
           tabBarActiveTintColor: '#cd1c4e',
           // tabBarStyle: { display: 'none' },
         }}
       />
     </Tab.Navigator>
-  );
+  )
 }

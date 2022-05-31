@@ -1,30 +1,21 @@
-import React, {
-  useState,
-  useCallback,
-  useLayoutEffect,
-  useEffect,
-} from 'react';
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
-import Like from '../../Tabs/iconHomeScreen/like/Like';
-import LikeActive from '../../Tabs/iconHomeScreen/like/LikeActive';
-import Donate from '../../Tabs/iconHomeScreen/donate/Donate';
-import DonateActive from '../../Tabs/iconHomeScreen/donate/DonateActive';
-import { auth, db } from '../../../utils/firebase';
+import React, { useState, useCallback, useLayoutEffect, useEffect } from 'react'
+import { View, Text, StyleSheet, TouchableOpacity } from 'react-native'
+import Like from '../../Tabs/iconHomeScreen/like/Like'
+import LikeActive from '../../Tabs/iconHomeScreen/like/LikeActive'
+import DonateActive from '../../Tabs/iconHomeScreen/donate/DonateActive'
+// import { auth, db } from '../../../utils/firebase'
+// import Donate from '../../Tabs/iconHomeScreen/donate/Donate'
 
 const HomeButtons = () => {
-  const [donate, setDonate] = useState(false);
-  // const [likes, setLikes] = useState([]);
-  const [likes, setLikes] = useState(false);
-  const clickDonate = () => setDonate(!donate);
+  const [likes, setLikes] = useState(false)
   const clickLike = () => {
     if (likes) {
-      return setLikes(likes - 1);
+      return setLikes(likes - 1)
     } else {
-      return setLikes(likes + 1);
+      return setLikes(likes + 1)
     }
-  };
+  }
 
-  //* кнопка Neumorphism
   const NeuMorph = ({ children, size, style }) => {
     return (
       <View style={styles.topShadow}>
@@ -38,46 +29,13 @@ const HomeButtons = () => {
                 borderRadius: size / 2 || 50 / 2,
               },
               style,
-            ]}
-          >
+            ]}>
             {children}
           </View>
         </View>
       </View>
-    );
-  };
-
-  // useEffect(() => {
-  //   onSnapshot(collection(db, id, 'likes'), (snapshot) =>
-  //     setLikes(snapshot.docs)
-  //   );
-  // }, [db]);
-
-  // useEffect(() => {
-  //   db.collection('likes').onSnapshot((snapshot) =>
-  //     setLikes(snapshot.docs.map((doc) => doc.data()))
-  //   );
-  // }, []);
-
-  // snapshot.docs.map((doc) => ({
-  //   _id: doc.data()._id,
-  //   user: doc.data().user,
-  // }))
-
-  // const clickLike = useCallback((likes = []) => {
-  //   setLikes((previousLikes) => GiftedChat.append(previousLikes, likes));
-  //   const { _id, user } = likes[0];
-  //   db.collection('likes').add({
-  //     _id,
-  //     user,
-  //   });
-  // }, []);
-
-  // const clickLike = async () => {
-  //   await setDoc(doc(db, 'posts', id, 'likes', session.user.uid), {
-  //     username: session.user.username,
-  //   });
-  // };
+    )
+  }
 
   return (
     <View style={styles.buttons}>
@@ -89,14 +47,15 @@ const HomeButtons = () => {
         <Text style={{ fontSize: 18 }}>{likes}</Text>
       </View>
 
-      <TouchableOpacity onPress={clickDonate} style={styles.donate}>
-        <NeuMorph>{donate ? <DonateActive /> : <Donate />}</NeuMorph>
+      {/* DONATE  */}
+      <TouchableOpacity style={styles.donate}>
+        <NeuMorph>{<DonateActive />}</NeuMorph>
       </TouchableOpacity>
     </View>
-  );
-};
+  )
+}
 
-export default HomeButtons;
+export default HomeButtons
 
 const styles = StyleSheet.create({
   inner: {
@@ -177,4 +136,42 @@ const styles = StyleSheet.create({
   //   shadowRadius: 6,
   //   elevation: 2,
   // },
-});
+})
+
+// database
+
+// useEffect(() => {
+//   onSnapshot(collection(db, id, 'likes'), (snapshot) =>
+//     setLikes(snapshot.docs)
+//   );
+// }, [db]);
+
+// useEffect(() => {
+//   db.collection('likes').onSnapshot((snapshot) =>
+//     setLikes(snapshot.docs.map((doc) => doc.data()))
+//   );
+// }, []);
+
+// snapshot.docs.map((doc) => ({
+//   _id: doc.data()._id,
+//   user: doc.data().user,
+// }))
+
+// const clickLike = useCallback((likes = []) => {
+//   setLikes((previousLikes) => GiftedChat.append(previousLikes, likes));
+//   const { _id, user } = likes[0];
+//   db.collection('likes').add({
+//     _id,
+//     user,
+//   });
+// }, []);
+
+// const clickLike = async () => {
+//   await setDoc(doc(db, 'posts', id, 'likes', session.user.uid), {
+//     username: session.user.username,
+//   });
+// };
+
+// Donate
+// const [donate, setDonate] = useState(false)
+// const clickDonate = () => setDonate(!donate)

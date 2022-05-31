@@ -1,20 +1,20 @@
-import React, { useState } from 'react';
-import { KeyboardAvoidingView, TouchableOpacity, StyleSheet, TextInput, Text, View } from 'react-native';
-import { auth } from './utils/firebase';
-import LogoRed from './components/Tabs/logoRed';
+import React, { useState } from 'react'
+import { KeyboardAvoidingView, TouchableOpacity, StyleSheet, TextInput, Text, View } from 'react-native'
+import { auth } from './utils/firebase'
+import LogoRed from './components/Tabs/logoRed'
 
 const RegisterScreen = ({ navigation }) => {
-  const [email, setEmail] = useState('');
-  const [name, setName] = useState('');
-  const [photoUrl, setPhotoUrl] = useState('');
-  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState('')
+  const [name, setName] = useState('')
+  const [photoUrl, setPhotoUrl] = useState('')
+  const [password, setPassword] = useState('')
 
-  //* регистрация
+  // Регистрация
   const register = () => {
     auth
       .createUserWithEmailAndPassword(email, password)
       .then((userCredential) => {
-        const user = userCredential.user;
+        const user = userCredential.user
         user
           .updateProfile({
             displayName: name,
@@ -25,17 +25,18 @@ const RegisterScreen = ({ navigation }) => {
           })
           .catch((error) => {
             // An error occurred
-          });
-        navigation.replace('Screens');
+          })
+
+        navigation.replace('Screens')
         // navigation.popToTop();
       })
       .catch((error) => {
-        const errorMessage = error.message;
-        alert('Введите данные', errorMessage); // предупреждение если нет данных
-      });
-  };
+        const errorMessage = error.message
+        alert('Введите данные', errorMessage) // предупреждение если нет данных
+      })
+  }
 
-  //* кнопка Neumorphism
+  // Кнопка Neumorphism
   const NeuMorph = ({ children, size, style }) => {
     return (
       <View style={styles.topShadow}>
@@ -54,8 +55,8 @@ const RegisterScreen = ({ navigation }) => {
           </View>
         </View>
       </View>
-    );
-  };
+    )
+  }
 
   return (
     <KeyboardAvoidingView style={styles.container} behavior="padding">
@@ -77,13 +78,6 @@ const RegisterScreen = ({ navigation }) => {
           secureTextEntry
           style={styles.input}
         />
-        {/* <TextInput
-          placeholder="Фото"
-          label="Фото профиля"
-          value={photoUrl}
-          onChangeText={(text) => setPhotoUrl(text)}
-          style={styles.input}
-        /> */}
       </View>
 
       <View style={styles.buttonContainer}>
@@ -96,10 +90,9 @@ const RegisterScreen = ({ navigation }) => {
         </TouchableOpacity>
       </View>
     </KeyboardAvoidingView>
-  );
-};
-
-export default RegisterScreen;
+  )
+}
+export default RegisterScreen
 
 const styles = StyleSheet.create({
   container: {
@@ -186,4 +179,4 @@ const styles = StyleSheet.create({
     fontWeight: '700',
     fontSize: 16,
   },
-});
+})

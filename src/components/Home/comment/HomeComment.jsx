@@ -1,9 +1,9 @@
-import React, { useState, useCallback, useLayoutEffect } from 'react';
-import { GiftedChat, Bubble } from 'react-native-gifted-chat';
-import { auth, db } from '../../../utils/firebase';
+import React, { useState, useCallback, useLayoutEffect } from 'react'
+import { GiftedChat, Bubble } from 'react-native-gifted-chat'
+import { auth, db } from '../../../utils/firebase'
 
 const HomeComment = () => {
-  const [messages, setMessages] = useState([]);
+  const [messages, setMessages] = useState([])
 
   useLayoutEffect(() => {
     const unsubscribe = db
@@ -18,22 +18,20 @@ const HomeComment = () => {
             user: doc.data().user,
           }))
         )
-      );
-    return unsubscribe;
-  }, []);
+      )
+    return unsubscribe
+  }, [])
 
   const onSend = useCallback((messages = []) => {
-    setMessages((previousMessages) =>
-      GiftedChat.append(previousMessages, messages)
-    );
-    const { _id, createdAt, text, user } = messages[0];
+    setMessages((previousMessages) => GiftedChat.append(previousMessages, messages))
+    const { _id, createdAt, text, user } = messages[0]
     db.collection('comments').add({
       _id,
       createdAt,
       text,
       user,
-    });
-  }, []);
+    })
+  }, [])
 
   return (
     <GiftedChat
@@ -66,10 +64,10 @@ const HomeComment = () => {
               },
             }}
           />
-        );
+        )
       }}
     />
-  );
-};
+  )
+}
 
-export default HomeComment;
+export default HomeComment
