@@ -1,31 +1,74 @@
-import React, { useState } from 'react'
-import { Modal, Text, SafeAreaView, StyleSheet, View, Keyboard, TouchableOpacity } from 'react-native'
+import React, { useState, useEffect, useRef } from 'react'
+import {
+  Modal,
+  Image,
+  Text,
+  SafeAreaView,
+  StyleSheet,
+  View,
+  Keyboard,
+  TouchableOpacity,
+  Animated,
+  Button,
+} from 'react-native'
 import { Divider } from 'react-native-elements'
 import { Broadcast } from './broadcast/Broadcast.jsx'
 import HomeComment from './comment/HomeComment'
 import Like from '../Tabs/iconHomeScreen/like/Like.jsx'
 import LikeActive from '../Tabs/iconHomeScreen/like/LikeActive'
 import DonateActive from '../Tabs/iconHomeScreen/donate/DonateActive'
+import * as Clipboard from 'expo-clipboard'
+import { AntDesign } from '@expo/vector-icons'
+import { LinearGradient } from 'expo-linear-gradient'
 
 const ModalPoup = ({ visible, children }) => {
   const [showModal, setShowModal] = useState(visible)
+  const scaleValue = useRef(new Animated.Value(0)).current
+
+  useEffect(() => {
+    toggleModal()
+  }, [visible])
+
+  const toggleModal = () => {
+    if (visible) {
+      setShowModal(true)
+      Animated.spring(scaleValue, {
+        toValue: 1,
+        duration: 300,
+        useNativeDriver: true,
+      }).start()
+    } else {
+      setTimeout(() => setShowModal(false), 200)
+      Animated.timing(scaleValue, {
+        toValue: 0,
+        duration: 300,
+        useNativeDriver: true,
+      }).start()
+    }
+  }
 
   return (
     <Modal transparent visible={showModal}>
       <View style={styles.modalBackGround}>
-        <View style={[styles.modalContainer]}></View>
+        <Animated.View style={[styles.modalContainer, { transform: [{ scale: scaleValue }] }]}>
+          {children}
+        </Animated.View>
       </View>
     </Modal>
   )
 }
 
 const HomeScreen = () => {
+  // clipBoard
+  const copyToClipboard = () => {
+    Clipboard.setString('2200 0202 3436 1378')
+  }
+
   // modal card
   const [visible, setVisible] = useState(false)
 
   // keyboard
   const dismissKeyboard = () => Keyboard.dismiss() // убрать клавиатуру
-
   // likes
   const [likes, setLikes] = useState(false)
   const clickLike = () => {
@@ -35,7 +78,6 @@ const HomeScreen = () => {
       return setLikes(likes + 1)
     }
   }
-
   // style neu
   const NeuMorph = ({ children, size, style }) => {
     return (
@@ -60,7 +102,76 @@ const HomeScreen = () => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <ModalPoup />
+      <ModalPoup visible={visible}>
+        {/* <View style={{ alignItems: 'center' }}>
+          <View style={styles.header}>
+            <TouchableOpacity onPress={() => setVisible(false)}>
+              <AntDesign name="close" size={24} color="black" />
+            </TouchableOpacity>
+          </View>
+        </View> */}
+
+        <View
+          style={{
+            width: '100%',
+            height: '100%',
+            position: 'absolute',
+            top: 0,
+            left: 0,
+            overflow: 'hidden',
+            zIndex: 1,
+          }}>
+          <View
+            style={{
+              display: 'flex',
+              flexDirection: 'row',
+              alignItems: 'flex-start',
+              justifyContent: 'space-between',
+              height: '100%',
+              padding: 20,
+            }}>
+            <Image
+              style={{ width: '10%', height: '16%' }}
+              source={require('./donate/image/chip.png')}
+            />
+            <Image
+              style={{ width: '18%', height: '10%' }}
+              source={require('./donate/image/visa.png')}
+            />
+          </View>
+
+          <Image
+            style={{
+              width: '100%',
+              height: '100%',
+              position: 'absolute',
+              opacity: 0.3,
+              top: 0,
+              left: 0,
+              zIndex: -1,
+            }}
+            source={require('./donate/image/map.png')}
+          />
+        </View>
+
+        {/* <View
+          style={{
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}>
+          <Text
+            // onPress={() => setVisible(false)}
+            onPress={copyToClipboard}
+            style={{
+              position: 'absolute',
+              borderWidth: 1,
+            }}>
+            2200 0202 3436 1378
+          </Text>
+        </View> */}
+      </ModalPoup>
+
       <View style={styles.broadcast}>
         <Broadcast />
       </View>
@@ -74,7 +185,6 @@ const HomeScreen = () => {
             <Text style={{ fontSize: 18 }}>{likes}</Text>
           </View>
 
-          {/* DONATE  */}
           <TouchableOpacity onPress={() => setVisible(true)} style={styles.donate}>
             <NeuMorph>{<DonateActive />}</NeuMorph>
           </TouchableOpacity>
@@ -85,17 +195,18 @@ const HomeScreen = () => {
     </SafeAreaView>
   )
 }
-
 export default HomeScreen
-
 const styles = StyleSheet.create({
   modalContainer: {
     width: '90%',
-    backgroundColor: 'white',
-    paddingHorizontal: 20,
-    paddingVertical: 30,
-    borderRadius: 20,
+    height: '30%',
+    backgroundColor: '#c91754',
+    // paddingHorizontal: 20,
+    // paddingVertical: 30,
+    borderRadius: 10,
     elevation: 20,
+    zIndex: 2,
+    overflow: 'hidden',
   },
 
   modalBackGround: {
@@ -104,6 +215,13 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
+
+  // header: {
+  //   width: '100%',
+  //   height: 40,
+  //   alignItems: 'flex-end',
+  //   justifyContent: 'center',
+  // },
 
   container: {
     width: '100%',
