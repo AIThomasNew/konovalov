@@ -1,34 +1,21 @@
 import React, { useState, useEffect, useRef } from 'react'
-import {
-  Modal,
-  Image,
-  Text,
-  SafeAreaView,
-  StyleSheet,
-  View,
-  Keyboard,
-  TouchableOpacity,
-  Animated,
-  Button,
-} from 'react-native'
+import { Modal, Image, Text, SafeAreaView, StyleSheet, View, Keyboard, TouchableOpacity, Animated } from 'react-native'
 import { Divider } from 'react-native-elements'
 import { Broadcast } from './broadcast/Broadcast.jsx'
+import { AntDesign } from '@expo/vector-icons'
 import HomeComment from './comment/HomeComment'
 import Like from '../Tabs/iconHomeScreen/like/Like.jsx'
 import LikeActive from '../Tabs/iconHomeScreen/like/LikeActive'
 import DonateActive from '../Tabs/iconHomeScreen/donate/DonateActive'
 import * as Clipboard from 'expo-clipboard'
-import { AntDesign } from '@expo/vector-icons'
-import { LinearGradient } from 'expo-linear-gradient'
 
-const ModalPoup = ({ visible, children }) => {
+const ModalPoup = ({ visible, children, cancelModal }) => {
   const [showModal, setShowModal] = useState(visible)
   const scaleValue = useRef(new Animated.Value(0)).current
 
   useEffect(() => {
     toggleModal()
   }, [visible])
-
   const toggleModal = () => {
     if (visible) {
       setShowModal(true)
@@ -50,26 +37,23 @@ const ModalPoup = ({ visible, children }) => {
   return (
     <Modal transparent visible={showModal}>
       <View style={styles.modalBackGround}>
-        <Animated.View style={[styles.modalContainer, { transform: [{ scale: scaleValue }] }]}>
-          {children}
-        </Animated.View>
+        <View style={styles.header}>
+          <TouchableOpacity onPress={cancelModal}>
+            <AntDesign name="close" size={24} color="#fff" />
+          </TouchableOpacity>
+        </View>
+        <Animated.View style={[styles.modalContainer, { transform: [{ scale: scaleValue }] }]}>{children}</Animated.View>
       </View>
     </Modal>
   )
 }
 
 const HomeScreen = () => {
-  // clipBoard
-  const copyToClipboard = () => {
-    Clipboard.setString('2200 0202 3436 1378')
-  }
-
-  // modal card
   const [visible, setVisible] = useState(false)
-
-  // keyboard
+  const cancelModal = () => setVisible(false)
   const dismissKeyboard = () => Keyboard.dismiss() // убрать клавиатуру
-  // likes
+  const copyToClipboard = () => Clipboard.setString('2200020234361378')
+
   const [likes, setLikes] = useState(false)
   const clickLike = () => {
     if (likes) {
@@ -78,7 +62,7 @@ const HomeScreen = () => {
       return setLikes(likes + 1)
     }
   }
-  // style neu
+
   const NeuMorph = ({ children, size, style }) => {
     return (
       <View style={styles.topShadow}>
@@ -102,79 +86,37 @@ const HomeScreen = () => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <ModalPoup visible={visible}>
-        {/* <View style={{ alignItems: 'center' }}>
-          <View style={styles.header}>
-            <TouchableOpacity onPress={() => setVisible(false)}>
-              <AntDesign name="close" size={24} color="black" />
-            </TouchableOpacity>
-          </View>
-        </View> */}
+      <ModalPoup cancelModal={cancelModal} visible={visible}>
+        <View style={styles.cardFront}>
+          <Image style={styles.mapImg} source={require('../../assets/image/map.png')} />
 
-        <View
-          style={{
-            width: '100%',
-            height: '100%',
-            position: 'absolute',
-            top: 0,
-            left: 0,
-            overflow: 'hidden',
-            zIndex: 1,
-          }}>
-          <View
-            style={{
-              display: 'flex',
-              flexDirection: 'row',
-              alignItems: 'flex-start',
-              justifyContent: 'space-between',
-              height: '100%',
-              padding: 20,
-            }}>
-            <Image
-              style={{ width: '10%', height: '16%' }}
-              source={require('./donate/image/chip.png')}
-            />
-            <Image
-              style={{ width: '18%', height: '10%' }}
-              source={require('./donate/image/visa.png')}
-            />
+          <View style={styles.row}>
+            <Image style={{ width: 30, height: 30 }} source={require('../../assets/image/chip.png')} />
+            <Image style={{ width: 60, height: 15 }} source={require('../../assets/image/mir.png')} />
           </View>
 
-          <Image
-            style={{
-              width: '100%',
-              height: '100%',
-              position: 'absolute',
-              opacity: 0.3,
-              top: 0,
-              left: 0,
-              zIndex: -1,
-            }}
-            source={require('./donate/image/map.png')}
-          />
+          <TouchableOpacity onPress={copyToClipboard}>
+            <Text style={styles.cardNo}>2200 0202 3436 1378</Text>
+          </TouchableOpacity>
+
+          <View>
+            <View style={styles.cardHolder}>
+              <Text style={{ color: '#fff', fontSize: 11 }}>CARD HOLDER</Text>
+              <Text style={{ color: '#fff', fontSize: 11 }}>VALID TILL</Text>
+            </View>
+
+            <View style={styles.cardName}>
+              <Text style={{ color: '#fff', fontSize: 17 }}>ALEXANDER KONOVALOV</Text>
+              <Text style={{ color: '#fff', fontSize: 17 }}>08 / 26</Text>
+            </View>
+          </View>
         </View>
-
-        {/* <View
-          style={{
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
-          }}>
-          <Text
-            // onPress={() => setVisible(false)}
-            onPress={copyToClipboard}
-            style={{
-              position: 'absolute',
-              borderWidth: 1,
-            }}>
-            2200 0202 3436 1378
-          </Text>
-        </View> */}
       </ModalPoup>
 
       <View style={styles.broadcast}>
         <Broadcast />
       </View>
+
       <TouchableOpacity activeOpacity={1} onPress={dismissKeyboard}>
         <View style={styles.buttons}>
           <View style={styles.likeContainer}>
@@ -190,39 +132,100 @@ const HomeScreen = () => {
           </TouchableOpacity>
         </View>
       </TouchableOpacity>
+
       <Divider width={1} orientation="vertical" />
+
       <HomeComment />
     </SafeAreaView>
   )
 }
+
 export default HomeScreen
+
 const styles = StyleSheet.create({
+  cardFront: {
+    width: '100%',
+    height: '100%',
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    overflow: 'hidden',
+    zIndex: 1,
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'flex-start',
+  },
+  mapImg: {
+    width: '100%',
+    height: '100%',
+    position: 'absolute',
+    opacity: 0.3,
+    top: 0,
+    left: 0,
+    zIndex: -1,
+  },
+  row: {
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    padding: 20,
+  },
+  cardNo: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    textAlign: 'center',
+    height: 65,
+    fontSize: 27,
+    color: 'rgb(201, 201, 201)',
+    paddingTop: 15,
+  },
+
+  cardHolder: {
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    paddingLeft: 20,
+    paddingRight: 20,
+    paddingTop: 10,
+    color: 'rgb(201, 201, 201)',
+    height: 25,
+  },
+  cardName: {
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    paddingLeft: 20,
+    paddingRight: 20,
+    paddingBottom: 14,
+    color: '#fff',
+    height: '40%',
+  },
   modalContainer: {
     width: '90%',
     height: '30%',
     backgroundColor: '#c91754',
-    // paddingHorizontal: 20,
-    // paddingVertical: 30,
     borderRadius: 10,
     elevation: 20,
     zIndex: 2,
     overflow: 'hidden',
   },
-
   modalBackGround: {
     flex: 1,
     backgroundColor: 'rgba(0,0,0,0.5)',
     justifyContent: 'center',
     alignItems: 'center',
   },
-
-  // header: {
-  //   width: '100%',
-  //   height: 40,
-  //   alignItems: 'flex-end',
-  //   justifyContent: 'center',
-  // },
-
+  header: {
+    width: '100%',
+    height: 40,
+    alignItems: 'flex-end',
+    justifyContent: 'center',
+    marginRight: 30,
+  },
   container: {
     width: '100%',
     height: '100%',
@@ -236,9 +239,6 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     overflow: 'hidden',
   },
-
-  /////////////
-
   inner: {
     backgroundColor: '#fff',
     borderColor: '#f6f6f6',
@@ -246,7 +246,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     borderWidth: 1,
   },
-
   topShadow: {
     shadowOffset: {
       width: -6,
@@ -256,7 +255,6 @@ const styles = StyleSheet.create({
     shadowRadius: 6,
     shadowColor: '#FBFFFF',
   },
-
   bottomShadow: {
     shadowOffset: {
       width: 6,
@@ -266,14 +264,10 @@ const styles = StyleSheet.create({
     shadowRadius: 6,
     shadowColor: '#d9d9d9',
   },
-
   playing: {
     color: 'gray',
     fontWeight: '800',
   },
-
-  //////////////////
-
   buttons: {
     marginRight: 30,
     marginLeft: 30,
@@ -281,22 +275,9 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     height: 70,
-    // borderWidth: 1,
   },
   like: {
     marginRight: 15,
-    // justifyContent: 'center',
-    // alignItems: 'center',
-    // borderRadius: 30,
-    // height: 50,
-    // width: 50,
-    // color: 'black',
-    // shadowOpacity: 1.0,
-    // shadowColor: '#C8C5C5',
-    // backgroundColor: 'white',
-    // shadowOffset: { width: 2, height: 3 },
-    // shadowRadius: 6,
-    // elevation: 2,
   },
   likeContainer: {
     marginRight: 40,
@@ -304,17 +285,4 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
-  // donate: {
-  //   justifyContent: 'center',
-  //   alignItems: 'center',
-  //   borderRadius: 30,
-  //   height: 50,
-  //   width: 50,
-  //   shadowOpacity: 1.0,
-  //   shadowColor: '#C8C5C5',
-  //   backgroundColor: 'white',
-  //   shadowOffset: { width: 2, height: 3 },
-  //   shadowRadius: 6,
-  //   elevation: 2,
-  // },
 })
