@@ -63,13 +63,7 @@ const RegisterScreen = ({ navigation }) => {
       <LogoRed />
       <View style={styles.inputContainer}>
         <TextInput placeholder="Имя" value={name} onChangeText={(text) => setName(text)} style={styles.input} />
-        <TextInput
-          placeholder="E-mail"
-          label="Email"
-          value={email}
-          onChangeText={(text) => setEmail(text)}
-          style={styles.input}
-        />
+        <TextInput placeholder="E-mail" label="Email" value={email} onChangeText={(text) => setEmail(text)} style={styles.input} />
         <TextInput
           placeholder="Пароль"
           label="Пароль"

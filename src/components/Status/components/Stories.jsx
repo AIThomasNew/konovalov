@@ -1,89 +1,80 @@
-import * as React from 'react';
-import { StyleSheet, Animated, Dimensions, Platform, View } from 'react-native';
-import Story from './Story';
+import * as React from 'react'
+import { StyleSheet, Animated, Dimensions, Platform, View } from 'react-native'
+import Story from './Story'
 
-const { width } = Dimensions.get('window');
-const perspective = width;
-const angle = Math.atan(perspective / (width / 2));
-const ratio = Platform.OS === 'ios' ? 2 : 1.2;
+const { width } = Dimensions.get('window')
+const perspective = width
+const angle = Math.atan(perspective / (width / 2))
+const ratio = Platform.OS === 'ios' ? 2 : 1.2
 
 type StoriesProps = {
   stories: StoryModel[],
-};
+}
 
 type StoriesState = {
   x: Animated.Value,
-};
+}
 
-export default class Stories extends React.PureComponent<
-  StoriesProps,
-  StoriesState
-> {
+export default class Stories extends React.PureComponent<StoriesProps, StoriesState> {
   state = {
     x: new Animated.Value(0),
-  };
+  }
 
   getStyle(index: number) {
-    const { x } = this.state;
-    const offset = index * width;
+    const { x } = this.state
+    const offset = index * width
 
-    const inputRange = [offset - width, offset + width];
+    const inputRange = [offset - width, offset + width]
 
     const translateX = x.interpolate({
       inputRange,
       outputRange: [width / ratio, -width / ratio],
       extrapolate: 'clamp',
-    });
+    })
     const rotateY = x.interpolate({
       inputRange,
       outputRange: [`${angle}rad`, `-${angle}rad`],
       extrapolate: 'clamp',
-    });
+    })
 
     const translateX1 = x.interpolate({
       inputRange,
       outputRange: [width / 2, -width / 2],
       extrapolate: 'clamp',
-    });
+    })
 
-    const extra = width / ratio / Math.cos(angle / 2) - width / ratio;
+    const extra = width / ratio / Math.cos(angle / 2) - width / ratio
     const translateX2 = x.interpolate({
       inputRange,
       outputRange: [-extra, extra],
       extrapolate: 'clamp',
-    });
+    })
 
     return {
       ...StyleSheet.absoluteFillObject,
-      transform: [
-        { perspective },
-        { translateX },
-        { rotateY },
-        { translateX: translateX1 },
-        { translateX: translateX2 },
-      ],
-    };
+      transform: [{ perspective }, { translateX }, { rotateY }, { translateX: translateX1 }, { translateX: translateX2 }],
+    }
   }
 
   getMaskStyle(index: number) {
-    const { x } = this.state;
-    const offset = index * width;
-    const inputRange = [offset - width, offset, offset + width];
+    const { x } = this.state
+    const offset = index * width
+    const inputRange = [offset - width, offset, offset + width]
     const opacity = x.interpolate({
       inputRange,
       outputRange: [0.75, 0, 0.75],
       extrapolate: 'clamp',
-    });
+    })
     return {
       backgroundColor: 'black',
       ...StyleSheet.absoluteFillObject,
       opacity,
-    };
+    }
   }
 
   render(): React.Node {
-    const { x } = this.state;
-    const { stories } = this.props;
+    const { x } = this.state
+    const { stories } = this.props
     return (
       <View style={styles.container}>
         {stories.map((story, i) => (
@@ -113,7 +104,7 @@ export default class Stories extends React.PureComponent<
           horizontal
         />
       </View>
-    );
+    )
   }
 }
 
@@ -122,4 +113,4 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: 'black',
   },
-});
+})

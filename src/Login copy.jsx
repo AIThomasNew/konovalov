@@ -1,24 +1,50 @@
 import React, { useState, useEffect } from 'react'
 import { Text, View, Image, Button, TextInput, StyleSheet, TouchableOpacity, KeyboardAvoidingView } from 'react-native'
 import LogoRed from './components/Tabs/logoRed'
-import * as Google from 'expo-google-app-auth'
+import * as Google from 'expo-auth-session/providers/google'
+import * as WebBrowser from 'expo-web-browser'
 
-// const config = {
-//   iosClientId: '589574173678-qk2bi30mupbnebkbucniobfhec6hc02i.apps.googleusercontent.com',
-//   androidClientId: '589574173678-gog5315758k3l4mt7mkdcki0sbrrjbfm.apps.googleusercontent.com',
-//   scopes: ['profile', 'email'],
-//   permissions: ['public', 'email', 'gender', 'location'],
-// }
+// promptAsync - При вызове веб-браузер откроется и предложит пользователю пройти аутентификацию
+WebBrowser.maybeCompleteAuthSession()
 
 const LoginScreen = ({ navigation }) => {
-  const signInWithGoogle = async () => {
-    await Google.logInAsync(config).then(async (logInResult) => {
-      if (logInResult.type === 'success') {
-      }
+  const [accessToken, setAccessToken] = useState()
+  const [userInfo, setUserInfo] = useState()
+  const [message, setMessage] = useState()
+  const [request, response, promptAsync] = Google.useAuthRequest({
+    androidClientId: '64014568433-jrf61r43nudjoovvahq16ucrq61pvvfk.apps.googleusercontent.com',
+    iosClientId: '64014568433-n25arqbcvl2jfjijtq5reiumgkpmn1hn.apps.googleusercontent.com',
+    expoClientId: '64014568433-4gqc1ndduh98lgn3b6q1ffmpkmdtd9k5.apps.googleusercontent.com',
+  })
+
+  useEffect(() => {
+    setMessage(JSON.stringify(response))
+    if (response?.type === 'success') {
+      setAccessToken(response.authentication.accessToken)
+    }
+  }, [response])
+
+  async function getUserData() {
+    let userInfoResponse = await fetch('https://www.googleapis.com/userinfo/v2/me', {
+      headers: { Authorization: `Bearer ${accessToken}` },
+    })
+
+    userInfoResponse.json().then((data) => {
+      setUserInfo(data)
     })
   }
 
-
+  function showUserInfo() {
+    if (userInfo) {
+      return (
+        <View style={styles.userInfo}>
+          <Image source={{ uri: userInfo.picture }} style={styles.profilePic} />
+          <Text>Welcome {userInfo.name}</Text>
+          <Text>{userInfo.email}</Text>
+        </View>
+      )
+    }
+  }
 
   const NeuMorph = ({ children, size, style }) => {
     return (
@@ -40,12 +66,27 @@ const LoginScreen = ({ navigation }) => {
       </View>
     )
   }
+
   return (
     <KeyboardAvoidingView style={styles.container} behavior="padding">
       <LogoRed />
 
+      <Text>{message}</Text>
+
+      {showUserInfo()}
+
       <View style={styles.buttonContainer}>
-        <TouchableOpacity activeOpacity={0.4}>
+        <TouchableOpacity
+          disabled={!request}
+          title={accessToken ? 'Get User Data' : 'Login'}
+          onPress={
+            accessToken
+              ? getUserData
+              : () => {
+                  promptAsync({ useProxy: false, showInRecents: true })
+                }
+          }
+          activeOpacity={0.4}>
           <NeuMorph>
             <View>
               <Text>ВХОД ЧЕРЕЗ GOOGLE АККАУНТ</Text>

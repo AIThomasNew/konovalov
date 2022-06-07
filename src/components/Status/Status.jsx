@@ -14,9 +14,7 @@ export default class StoriesStatus extends React.Component<{}, StoriesStatusStat
   }
 
   async componentDidMount() {
-    await Promise.all(
-      stories.map((story) => Promise.all([Asset.loadAsync(story.source), Asset.loadAsync(story.avatar)]))
-    )
+    await Promise.all(stories.map((story) => Promise.all([Asset.loadAsync(story.source), Asset.loadAsync(story.avatar)])))
     this.setState({ ready: true })
   }
 

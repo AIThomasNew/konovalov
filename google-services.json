@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "589574173678",
+    "project_id": "konovalov-471d1",
+    "storage_bucket": "konovalov-471d1.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:589574173678:android:2e60472f3420af52fe54ff",
+        "android_client_info": {
+          "package_name": "host.exp.exponent"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "589574173678-gog5315758k3l4mt7mkdcki0sbrrjbfm.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCl7jPMtQBdevog8Hkn2nPF8nkIAe9djyI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "589574173678-gog5315758k3l4mt7mkdcki0sbrrjbfm.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "589574173678-qk2bi30mupbnebkbucniobfhec6hc02i.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "host.exp.exponent"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

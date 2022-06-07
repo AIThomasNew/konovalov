@@ -1,50 +1,38 @@
-// import { auth } from './utils/firebase';
-import React, { useState, useEffect } from 'react';
-import LogoRed from './components/Tabs/logoRed';
-import { Text, View, TextInput, StyleSheet, TouchableOpacity, KeyboardAvoidingView } from 'react-native';
-import { auth } from './utils/firebase';
+import React, { useState, useEffect } from 'react'
+import { Text, View, TextInput, StyleSheet, TouchableOpacity, KeyboardAvoidingView } from 'react-native'
+import LogoRed from './components/Tabs/logoRed'
+import { auth } from './utils/firebase'
 
 const LoginScreen = ({ navigation }) => {
-  //* логин
-  const [email, setEmail] = useState('');
-  //* пароль
-  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
 
-  //* вход
   const signIn = () => {
     auth.signInWithEmailAndPassword(email, password).catch((error) => {
-      const errorMessage = error.message;
-      alert('Введите данные', errorMessage);
-    });
-  };
+      const errorMessage = error.message
+      alert('Введите данные', errorMessage)
+    })
+  }
 
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((user) => {
       if (user) {
-        navigation.replace('Screens');
+        navigation.replace('Screens')
       } else {
-        navigation.canGoBack() && navigation.popToTop();
+        navigation.canGoBack() && navigation.popToTop()
       }
-      return unsubscribe;
-    }, []);
-  });
+      return unsubscribe
+    }, [])
+  })
 
   return (
     <KeyboardAvoidingView style={styles.container} behavior="padding">
       <LogoRed />
 
-
       <View style={styles.inputContainer}>
         <TextInput placeholder="E-mail" value={email} onChangeText={(text) => setEmail(text)} style={styles.input} />
-        <TextInput
-          placeholder="Пароль"
-          value={password}
-          onChangeText={(text) => setPassword(text)}
-          style={styles.input}
-          secureTextEntry
-        />
+        <TextInput placeholder="Пароль" value={password} onChangeText={(text) => setPassword(text)} style={styles.input} secureTextEntry />
       </View>
-
 
       <View style={styles.buttonContainer}>
         <TouchableOpacity onPress={signIn} activeOpacity={0.4}>
@@ -55,7 +43,6 @@ const LoginScreen = ({ navigation }) => {
           </NeuMorph>
         </TouchableOpacity>
 
-
         <TouchableOpacity onPress={() => navigation.navigate('Регистрация')} activeOpacity={0.4}>
           <NeuMorph>
             <View>
@@ -65,10 +52,10 @@ const LoginScreen = ({ navigation }) => {
         </TouchableOpacity>
       </View>
     </KeyboardAvoidingView>
-  );
-};
+  )
+}
 
-export default LoginScreen;
+export default LoginScreen
 
 const styles = StyleSheet.create({
   container: {
@@ -157,4 +144,4 @@ const styles = StyleSheet.create({
     width: 50,
     height: 50,
   },
-});
+})

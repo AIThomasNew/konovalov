@@ -1,13 +1,6 @@
-import * as React from 'react';
-import {
-  StyleSheet,
-  View,
-  Image,
-  SafeAreaView,
-  TextInput,
-  Platform,
-} from 'react-native';
-import type { ImageSourcePropType } from 'react-native/Libraries/Image/ImageSourcePropType';
+import * as React from 'react'
+import { StyleSheet, View, Image, SafeAreaView, TextInput, Platform } from 'react-native'
+import type { ImageSourcePropType } from 'react-native/Libraries/Image/ImageSourcePropType'
 
 // import { Feather as Icon } from '@expo/vector-icons';
 // import Avatar from './Avatar';
@@ -17,17 +10,17 @@ export type Story = {
   source: ImageSourcePropType,
   user: string,
   avatar: ImageSourcePropType,
-};
+}
 
 type StoryProps = {
   story: Story,
-};
+}
 
 export default class extends React.PureComponent<StoryProps> {
   render(): React.Node {
     const {
       story: { source, user, avatar },
-    } = this.props;
+    } = this.props
     return (
       <SafeAreaView style={styles.container}>
         <View style={styles.container}>
@@ -40,7 +33,7 @@ export default class extends React.PureComponent<StoryProps> {
           <Icon name="message-circle" color="white" size={28} />
         </View> */}
       </SafeAreaView>
-    );
+    )
   }
 }
 
@@ -67,4 +60,4 @@ const styles = StyleSheet.create({
     width: 250,
     borderRadius: Platform.OS === 'android' ? 0 : 10,
   },
-});
+})
