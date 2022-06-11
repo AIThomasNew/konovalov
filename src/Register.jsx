@@ -1,13 +1,13 @@
 import React, { useState } from 'react'
 import { KeyboardAvoidingView, TouchableOpacity, StyleSheet, TextInput, Text, View } from 'react-native'
-import { auth } from './utils/firebase'
 import LogoRed from './components/Tabs/logoRed'
+import { auth } from './utils/firebase'
 
 const RegisterScreen = ({ navigation }) => {
   const [email, setEmail] = useState('')
   const [name, setName] = useState('')
-  const [photoUrl, setPhotoUrl] = useState('')
   const [password, setPassword] = useState('')
+  const [photoUrl, setPhotoUrl] = useState('')
 
   // Регистрация
   const register = () => {
@@ -36,7 +36,6 @@ const RegisterScreen = ({ navigation }) => {
       })
   }
 
-  // Кнопка Neumorphism
   const NeuMorph = ({ children, size, style }) => {
     return (
       <View style={styles.topShadow}>
@@ -45,7 +44,7 @@ const RegisterScreen = ({ navigation }) => {
             style={[
               styles.inner,
               {
-                width: size || 200,
+                width: size || 260,
                 height: size || 50,
                 borderRadius: size / 2 || 100 / 2,
               },
@@ -62,10 +61,18 @@ const RegisterScreen = ({ navigation }) => {
     <KeyboardAvoidingView style={styles.container} behavior="padding">
       <LogoRed />
       <View style={styles.inputContainer}>
-        <TextInput placeholder="Имя" value={name} onChangeText={(text) => setName(text)} style={styles.input} />
-        <TextInput placeholder="E-mail" label="Email" value={email} onChangeText={(text) => setEmail(text)} style={styles.input} />
+        <TextInput placeholder="Имя" placeholderTextColor={'gray'} value={name} onChangeText={(text) => setName(text)} style={styles.input} />
+        <TextInput
+          placeholder="E-mail"
+          placeholderTextColor={'gray'}
+          label="Email"
+          value={email}
+          onChangeText={(text) => setEmail(text)}
+          style={styles.input}
+        />
         <TextInput
           placeholder="Пароль"
+          placeholderTextColor={'gray'}
           label="Пароль"
           value={password}
           onChangeText={(text) => setPassword(text)}
@@ -96,7 +103,7 @@ const styles = StyleSheet.create({
   },
 
   inputContainer: {
-    width: '80%',
+    width: '70%',
   },
 
   inner: {

@@ -53,16 +53,6 @@ const HomeScreen = () => {
   const cancelModal = () => setVisible(false)
   const dismissKeyboard = () => Keyboard.dismiss() // убрать клавиатуру
   const copyToClipboard = () => Clipboard.setString('2200020234361378')
-
-  const [likes, setLikes] = useState(false)
-  const clickLike = () => {
-    if (likes) {
-      return setLikes(likes - 1)
-    } else {
-      return setLikes(likes + 1)
-    }
-  }
-
   const NeuMorph = ({ children, size, style }) => {
     return (
       <View style={styles.topShadow}>
@@ -82,6 +72,15 @@ const HomeScreen = () => {
         </View>
       </View>
     )
+  }
+
+  const [likes, setLikes] = useState(false)
+  const clickLike = () => {
+    if (likes) {
+      return setLikes(likes - 1)
+    } else {
+      return setLikes(likes + 1)
+    }
   }
 
   return (

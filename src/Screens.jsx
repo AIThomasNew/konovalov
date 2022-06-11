@@ -12,38 +12,44 @@ const Tab = createBottomTabNavigator()
 const homeName = 'Эфир'
 const statusName = 'Status'
 const Screens = () => {
-  const tabStyle = {
-    headerStyle: {
-      backgroundColor: THEME.MAIN_COLOR,
-    },
-    headerTintColor: '#fff',
-    tabBarStyle: {
-      height: 55,
-      paddingBottom: 5,
-      paddingTop: 6,
-      color: 'black',
-      fontSize: 20,
-    },
-  }
-  const tabOptionsHome = {
-    tabBarIcon: ({ focused }) => {
-      return focused ? <HomeTabActive /> : <HomeTab />
-    },
-    tabBarActiveTintColor: '#cd1c4e',
-  }
-  const tabOptionsStatus = {
-    headerShown: false,
-    tabBarIcon: ({ focused }) => {
-      return focused ? <StoriesTabActive /> : <StoriesTab />
-    },
-    tabBarActiveTintColor: '#cd1c4e',
-    // tabBarStyle: { display: 'none' },
-  }
-
   return (
-    <Tab.Navigator initialRouteName={homeName} screenOptions={{ tabStyle }}>
-      <Tab.Screen name={homeName} component={HomeStack} options={{ tabOptionsHome }} />
-      <Tab.Screen name={statusName} component={Status} options={{ tabOptionsStatus }} />
+    <Tab.Navigator
+      initialRouteName={homeName}
+      screenOptions={{
+        headerStyle: {
+          backgroundColor: THEME.MAIN_COLOR,
+        },
+        headerTintColor: '#fff',
+        tabBarStyle: {
+          height: 55,
+          paddingBottom: 5,
+          paddingTop: 6,
+          color: 'black',
+          fontSize: 20,
+        },
+      }}>
+      <Tab.Screen
+        name={homeName}
+        component={HomeStack}
+        options={{
+          tabBarIcon: ({ focused }) => {
+            return focused ? <HomeTabActive /> : <HomeTab />
+          },
+          tabBarActiveTintColor: '#cd1c4e',
+        }}
+      />
+      <Tab.Screen
+        name={statusName}
+        component={Status}
+        options={{
+          headerShown: false,
+          tabBarIcon: ({ focused }) => {
+            return focused ? <StoriesTabActive /> : <StoriesTab />
+          },
+          tabBarActiveTintColor: '#cd1c4e',
+          // tabBarStyle: { display: 'none' },
+        }}
+      />
     </Tab.Navigator>
   )
 }

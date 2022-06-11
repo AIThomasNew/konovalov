@@ -1,30 +1,7 @@
-import React, { useState, useEffect } from 'react'
-import { Text, View, TextInput, StyleSheet, TouchableOpacity, KeyboardAvoidingView } from 'react-native'
-import LogoRed from './components/Tabs/logoRed'
-import { auth } from './utils/firebase'
+import React from 'react'
+import { View, StyleSheet, TouchableOpacity, Text } from 'react-native'
 
-const LoginScreen = ({ navigation }) => {
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
-
-  const signIn = () => {
-    auth.signInWithEmailAndPassword(email, password).catch((error) => {
-      const errorMessage = error.message
-      alert('Введите данные', errorMessage)
-    })
-  }
-
-  useEffect(() => {
-    const unsubscribe = auth.onAuthStateChanged((user) => {
-      if (user) {
-        navigation.replace('Screens')
-      } else {
-        navigation.canGoBack() && navigation.popToTop()
-      }
-      return unsubscribe
-    }, [])
-  })
-
+const Welcome = ({ navigation }) => {
   const NeuMorph = ({ children, size, style }) => {
     return (
       <View style={styles.topShadow}>
@@ -33,7 +10,7 @@ const LoginScreen = ({ navigation }) => {
             style={[
               styles.inner,
               {
-                width: size || 260,
+                width: size || 300,
                 height: size || 50,
                 borderRadius: size / 2 || 100 / 2,
               },
@@ -47,55 +24,30 @@ const LoginScreen = ({ navigation }) => {
   }
 
   return (
-    <KeyboardAvoidingView style={styles.container} behavior="padding">
-      <LogoRed />
-
-      <View style={styles.inputContainer}>
-        <TextInput placeholder="E-mail" placeholderTextColor={'gray'} value={email} onChangeText={(text) => setEmail(text)} style={styles.input} />
-        <TextInput
-          placeholder="Пароль"
-          placeholderTextColor={'gray'}
-          value={password}
-          onChangeText={(text) => setPassword(text)}
-          style={styles.input}
-          secureTextEntry
-        />
-      </View>
-
+    <View style={styles.container}>
+      <Text>Привет, name!</Text>
       <View style={styles.buttonContainer}>
-        <TouchableOpacity onPress={signIn} activeOpacity={0.4}>
+        <TouchableOpacity onPress={() => navigation.navigate('Screens')} activeOpacity={0.4}>
           <NeuMorph>
             <View>
-              <Text>ВОЙТИ</Text>
-            </View>
-          </NeuMorph>
-        </TouchableOpacity>
-
-        <TouchableOpacity onPress={() => navigation.navigate('Регистрация')} activeOpacity={0.4}>
-          <NeuMorph>
-            <View>
-              <Text>РЕГИСТРАЦИЯ</Text>
+              <Text>Мне 18 лет и я хочу войти</Text>
             </View>
           </NeuMorph>
         </TouchableOpacity>
       </View>
-    </KeyboardAvoidingView>
+    </View>
   )
 }
-
-export default LoginScreen
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'space-evenly',
+    justifyContent: 'center',
     alignItems: 'center',
-    paddingTop: 80,
   },
 
   inputContainer: {
-    width: '70%',
-    marginTop: 10,
+    width: '80%',
   },
 
   inner: {
@@ -144,7 +96,7 @@ const styles = StyleSheet.create({
     width: '60%',
     justifyContent: 'center',
     alignItems: 'center',
-    marginTop: 10,
+    marginTop: 50,
   },
 
   buttonOutline: {
@@ -175,3 +127,5 @@ const styles = StyleSheet.create({
     height: 50,
   },
 })
+
+export default Welcome
