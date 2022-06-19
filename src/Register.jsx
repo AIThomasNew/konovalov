@@ -1,13 +1,19 @@
 import React, { useState } from 'react'
-import { KeyboardAvoidingView, TouchableOpacity, StyleSheet, TextInput, Text, View } from 'react-native'
+import { Linking, KeyboardAvoidingView, TouchableOpacity, StyleSheet, TextInput, Text, View } from 'react-native'
 import LogoRed from './components/Tabs/logoRed'
 import { auth } from './utils/firebase'
 
 const RegisterScreen = ({ navigation }) => {
+  // const url = 'https://docs.google.com/document/d/1Vxr88qTbBqzbF7Kk6aITpToGbgPh0luc3E1PKhzfenk'
   const [email, setEmail] = useState('')
   const [name, setName] = useState('')
   const [password, setPassword] = useState('')
   const [photoUrl, setPhotoUrl] = useState('')
+
+  const openLink = () => {
+    let url = 'https://docs.google.com/document/d/1Vxr88qTbBqzbF7Kk6aITpToGbgPh0luc3E1PKhzfenk'
+    Linking.openURL(url)
+  }
 
   // Регистрация
   const register = () => {
@@ -62,6 +68,7 @@ const RegisterScreen = ({ navigation }) => {
       <LogoRed />
       <View style={styles.inputContainer}>
         <TextInput placeholder="Имя" placeholderTextColor={'gray'} value={name} onChangeText={(text) => setName(text)} style={styles.input} />
+
         <TextInput
           placeholder="E-mail"
           placeholderTextColor={'gray'}
@@ -70,6 +77,7 @@ const RegisterScreen = ({ navigation }) => {
           onChangeText={(text) => setEmail(text)}
           style={styles.input}
         />
+
         <TextInput
           placeholder="Пароль"
           placeholderTextColor={'gray'}
@@ -89,6 +97,16 @@ const RegisterScreen = ({ navigation }) => {
             </View>
           </NeuMorph>
         </TouchableOpacity>
+        <View>
+          <Text style={{ color: 'grey' }}>
+            Регистрируясь в сервисе или используя сервис любым способом, вы соглашаетесь и принимаете условия настоящей{' '}
+            <TouchableOpacity>
+              <Text style={{ color: '#cd1c4e' }} onPress={openLink}>
+                Политики конфиденциальности
+              </Text>
+            </TouchableOpacity>
+          </Text>
+        </View>
       </View>
     </KeyboardAvoidingView>
   )

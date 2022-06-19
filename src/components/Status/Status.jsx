@@ -1,5 +1,5 @@
 import React from 'react'
-import { StatusBar, View, ActivityIndicator, StyleSheet, Button } from 'react-native'
+import { View, ActivityIndicator, StyleSheet, Button } from 'react-native'
 import { Asset } from 'expo-asset'
 import { Stories, Stories2 } from './components'
 import { stories } from '../../data/status'
@@ -29,7 +29,6 @@ export default class StoriesStatus extends React.Component<{}, StoriesStatusStat
     }
     return (
       <View style={{ flex: 1 }}>
-        <StatusBar barStyle="light-content" />
         <Stories2 {...{ stories }} />
       </View>
     )

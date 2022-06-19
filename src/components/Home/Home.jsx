@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react'
+import React, { useState, useEffect, useRef, useLayoutEffect, useCallback } from 'react'
 import { Modal, Image, Text, SafeAreaView, StyleSheet, View, Keyboard, TouchableOpacity, Animated } from 'react-native'
 import { Divider } from 'react-native-elements'
 import { Broadcast } from './broadcast/Broadcast.jsx'
@@ -8,6 +8,8 @@ import Like from '../Tabs/iconHomeScreen/like/Like.jsx'
 import LikeActive from '../Tabs/iconHomeScreen/like/LikeActive'
 import DonateActive from '../Tabs/iconHomeScreen/donate/DonateActive'
 import * as Clipboard from 'expo-clipboard'
+import { auth, db } from '../../utils/firebase.js'
+// import firestore from '@react-native-firebase/firestore'
 
 const ModalPoup = ({ visible, children, cancelModal }) => {
   const [showModal, setShowModal] = useState(visible)
@@ -74,7 +76,8 @@ const HomeScreen = () => {
     )
   }
 
-  const [likes, setLikes] = useState(false)
+  const [likes, setLikes] = useState('')
+
   const clickLike = () => {
     if (likes) {
       return setLikes(likes - 1)
